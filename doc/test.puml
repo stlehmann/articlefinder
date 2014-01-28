@@ -1,0 +1,20 @@
+@startuml
+
+interface Shop {
+    str url
+    str name
+    get_price(partname, count=1)
+}
+
+class Part{
+    name
+    shop
+    price
+}
+
+class Browser {
+}
+
+Shop -> Browser: contains
+Shop *-- Part: returns
+@enduml
