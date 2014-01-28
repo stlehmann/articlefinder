@@ -8,3 +8,5 @@ class Article(object):
         self.articlenr = ""
         self.price = ""
         self.url = ""
+        self.shop = None
+        self.pkg_unit = 1

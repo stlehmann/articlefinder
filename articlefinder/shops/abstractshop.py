@@ -7,5 +7,5 @@ class AbstractShop (object):
         self.url = ""
         self.name = ""
 
-    def find_article(self, text):
+    def find_articles(self, text):
         raise NotImplementedError()
