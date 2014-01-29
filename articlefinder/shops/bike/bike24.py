@@ -17,9 +17,9 @@ class Bike24(AbstractShop):
         self.name = "Bike24"
         self.url = "http://www.bike24.net"
 
-    def find_articles(self, text):
-        text = "+".join(text.split())
-        html = urllib2.urlopen("http://www.bike24.net/1.php?content=13&navigation=1&menu=1000%2C4%2C38&search=" + text + ";pitems=50").read()
+    def find_articles(self, search_term):
+        search_term = "+".join(search_term.split())
+        html = urllib2.urlopen("http://www.bike24.net/1.php?content=13&navigation=1&menu=1000%2C4%2C38&search=" + search_term + ";pitems=50").read()
         soup = bs4.BeautifulSoup(html)
         tbl = soup('table', class_='simpletablefull')
         if not len(tbl):

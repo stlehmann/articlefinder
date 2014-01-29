@@ -1,5 +1,18 @@
+# -*- coding: utf-8 -*-
 import re
+import HTMLParser
 __author__ = 'lehmann'
+
+
+def abstractmethod(method):
+    """
+    Decorator for abstract methods.
+
+    """
+    def default_abstract_method(*args, **kwargs):
+        raise NotImplementedError('call to abstract method ' + repr(method))
+    default_abstract_method.__name__ = method.__name__
+    return default_abstract_method
 
 
 def extract_number(text):
@@ -34,3 +47,7 @@ def extract_float(str_):
     res = res.replace(",", ".")
 
     return float(res)
+
+
+def html_to_str(html):
+    return html #HTMLParser.HTMLParser().unescape(html)

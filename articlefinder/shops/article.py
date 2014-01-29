@@ -9,4 +9,5 @@ class Article(object):
         self.price = ""
         self.url = ""
         self.shop = None
-        self.pkg_unit = 1
+        self.unit = 1
+        self.brand = ""

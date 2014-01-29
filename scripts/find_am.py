@@ -25,15 +25,16 @@ def find(text):
     tbl = [[article.shop.name,
             limit_str(article.name, 50),
             article.articlenr,
+            article.brand,
             locale.currency(article.price, symbol="")]
            for article in articles]
 
     print tabulate(
         tbl,
-        headers=["Shop", "Artikelname", "Artikelnr.", "Preis"],
+        headers=["Shop", "Artikelname", "Artikelnr.", "Marke", "Preis"],
         tablefmt="simple"
     )
 
-
-find(sys.argv[1])
+#find(sys.argv[1])
+find("Skintop M")
 

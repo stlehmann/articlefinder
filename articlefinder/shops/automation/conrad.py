@@ -1,10 +1,8 @@
+#-*- coding: utf-8 -*-
 import urllib
-import urllib2
-import bs4
-import re
 from articlefinder.shops.article import Article
 from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.utilities import extract_number, extract_float
+from articlefinder.utilities import extract_float
 
 __author__ = 'lehmann'
 
@@ -15,12 +13,17 @@ class Conrad(AbstractShop):
         self.name = "Conrad"
         self.url = "http://www.conrad.de/ce/de/"
 
-    def find_articles(self, text):
-        text = "+".join(text.split())
-        url = urllib.basejoin(self.url, "Search.html?search=" + text)
-        html = urllib2.urlopen(url).read()
-        soup = bs4.BeautifulSoup(html)
+    def _get_search_url(self, text):
+        """
+        Create URL from given search text.
 
+        """
+        data = {"search": "+".join(text.split())}
+        url_values = urllib.urlencode(data)
+        return urllib.basejoin(self.url, "Search.html" + "?" + url_values)
+
+    def find_articles(self, search_term):
+        soup = self.get_html_soup(search_term)
         divs = soup("div", class_="list-product-item teaserClickable")
         for div in divs:
             a = Article()
@@ -33,5 +36,5 @@ class Conrad(AbstractShop):
 
 if __name__ == "__main__":
     c = Conrad()
-    for a in c.find_articles("Lapp"):
+    for a in c.find_articles("Weidmüller"):
         print a.name, a.price
