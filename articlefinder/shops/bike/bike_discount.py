@@ -45,6 +45,7 @@ class BikeDiscount(AbstractShop):
                 a.shop = self
                 a.brand = row.a.text
                 a.name = row.a.next_sibling.text
+                a.url = self.url + "/" + row("a")[1]["href"]
                 a.price = extract_float(row(class_="priceteaser")[0].text)
                 yield a
 
@@ -52,4 +53,4 @@ class BikeDiscount(AbstractShop):
 if __name__=="__main__":
     shop = BikeDiscount()
     for a in shop.find_articles("Ultegra"):
-        print a.brand, a.name, a.price
+        print a.brand, a.name, a.price, a.url

@@ -33,7 +33,12 @@ class Bike24(AbstractShop):
             a = Article()
             a.shop = self
             a.name = h("b")[0].text
-            a.url = row("a")[0].get("href")
+            a.url = self.url + "/" + row("a")[0].get("href")
             a.price = extract_float(row("td")[2].text)
             a.articlenr = _get_productid(a.url)
             yield a
+
+if __name__ == "__main__":
+    shop = Bike24()
+    for a in shop.find_articles("Umwerfer"):
+        print a.name, a.url

@@ -22,6 +22,8 @@ def _get_attr_value(article, attr, max_len=50):
         return locale.currency(val, symbol="")
     elif attr == "shop":
         return val.name
+    elif attr == "url":
+        return val
     else:
         return limit_str(val, max_len)
 
