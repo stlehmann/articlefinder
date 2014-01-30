@@ -1,8 +1,6 @@
-import urllib2
-import bs4
 import re
 from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.shops.article import Article
+from articlefinder.article import Article
 from articlefinder.utilities import extract_float
 
 __author__ = 'stefanlehmann'

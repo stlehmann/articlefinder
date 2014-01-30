@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 import urllib
-from articlefinder.shops.article import Article
+from articlefinder.article import Article
 from articlefinder.shops.abstractshop import AbstractShop
 from articlefinder.utilities import extract_float
 
