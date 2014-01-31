@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
 import bs4
 from articlefinder.shops.abstractshop import AbstractShop
 from articlefinder.article import Article
@@ -19,14 +18,10 @@ class BikeDiscount(AbstractShop):
         self.name = "Bike Discount"
         self.url = "http://www.bike-discount.de"
 
-    def _post_search(self, search_term):
-        data = {"query": search_term}
-        data = urllib.urlencode(data)
-        return urllib2.urlopen(self.url + "/shop/misearch.html", data)
-
     def find_articles(self, search_term):
-        res = self._post_search(search_term)
-        html = res.read()
+        data = urllib.parse.urlencode({"query": search_term})
+        url = self.url + "/shop/misearch.html" + "?" + data
+        html = urllib.request.urlopen(url)
         soup = bs4.BeautifulSoup(html)
 
         rows = soup("div", class_="pdlistdetails")
@@ -53,4 +48,4 @@ class BikeDiscount(AbstractShop):
 if __name__=="__main__":
     shop = BikeDiscount()
     for a in shop.find_articles("Ultegra"):
-        print a.brand, a.name, a.price, a.url
+        print((a.brand, a.name, a.price, a.url))

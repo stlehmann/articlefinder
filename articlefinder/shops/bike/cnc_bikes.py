@@ -1,8 +1,6 @@
-import urllib
-import urllib2
-
 import bs4
-
+import urllib.parse
+import urllib.request
 from articlefinder.shops.abstractshop import AbstractShop
 from articlefinder.article import Article
 from articlefinder.utilities import extract_float
@@ -21,9 +19,9 @@ class CNCBikes(AbstractShop):
         return super(CNCBikes, self)._get_search_url(search_term)
 
     def _search(self, search_term):
-        data = urllib.urlencode({"keywords": search_term, "title": "1"})
-        html = urllib2.urlopen(
-            "http://www.cnc-bike.de/advanced_search_result.php?" + data)
+        data = urllib.parse.urlencode({"keywords": search_term, "title": "1"}, encoding="iso8859-1")
+        url = "http://www.cnc-bike.de/advanced_search_result.php?" + data
+        html = urllib.request.urlopen(url)
         soup = bs4.BeautifulSoup(html)
 
         tbl = soup("table", class_="productListing")[0]
@@ -44,5 +42,5 @@ class CNCBikes(AbstractShop):
 
 if __name__ == "__main__":
     shop = CNCBikes()
-    for a in shop.find_articles("Sattel"):
-        print a.name, a.price, a.url
+    for a in shop.find_articles("Sattelstütze"):
+        print((a.name, a.price, a.url))

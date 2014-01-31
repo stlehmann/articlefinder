@@ -1,4 +1,3 @@
-#-*- coding: utf-8 -*-
 from articlefinder.utilities import limit_str
 
 __author__ = 'lehmann'
@@ -8,7 +7,7 @@ import operator
 from tabulate import tabulate
 from articlefinder.finder.simple_finder import SimpleFinder
 
-locale.setlocale(locale.LC_ALL, "")
+locale.setlocale(locale.LC_ALL, "de_DE.UTF-8")
 
 
 class TableDimensionError(Exception):
@@ -19,7 +18,7 @@ class TableDimensionError(Exception):
 def _get_attr_value(article, attr, max_len=50):
     val = getattr(article, attr)
     if attr == "price":
-        return locale.currency(val, symbol="")
+        return locale.currency(val, symbol=False)
     elif attr == "shop":
         return val.name
     elif attr == "url":
@@ -68,24 +67,25 @@ class TableFinder(SimpleFinder):
 
     def find(self, search_term):
         def _find(search_term):
-            print "-----------------------"
-            print "Browsing Shops"
-            print "-----------------------"
+            print ("-----------------------")
+            print ("Browsing Shops")
+            print ("-----------------------")
             for shop in self.shops:
-                print shop.name + "...",
+                print((shop.name + "..."), end=' ')
                 for a in shop.find_articles(search_term):
                     yield a
-                print "Done"
-            print "-----------------------"
+                print ("Done")
+            print ("-----------------------")
 
         def _get_table():
             for article in articles:
                 yield [_get_attr_value(article, attr) for attr in self._attributes]
 
         articles = TableFinder.sort(_find(search_term))
-        print tabulate(
-            _get_table(),
+        content = _get_table()
+        print((tabulate(
+            content,
             headers=self._headers,
             tablefmt=self.tablefmt
-        )
+        )))
 

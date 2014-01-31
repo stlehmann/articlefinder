@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request
 import bs4
 from articlefinder.utilities import abstractmethod
 
@@ -36,5 +36,5 @@ class AbstractShop (object):
 
         """
         url = self._get_search_url(search_term)
-        html = urllib2.urlopen(url).read()
+        html = urllib.request.urlopen(url).read()
         return bs4.BeautifulSoup(html, from_encoding="utf-8")

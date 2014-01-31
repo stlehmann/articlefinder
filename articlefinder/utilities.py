@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import re
-import HTMLParser
 __author__ = 'lehmann'
 
 
@@ -47,7 +46,3 @@ def extract_float(str_):
     res = res.replace(",", ".")
 
     return float(res)
-
-
-def html_to_str(html):
-    return html #HTMLParser.HTMLParser().unescape(html)

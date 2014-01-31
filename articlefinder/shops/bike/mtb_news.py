@@ -1,5 +1,5 @@
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import bs4
 from articlefinder.article import Article
 from articlefinder.shops.abstractshop import AbstractShop
@@ -15,9 +15,9 @@ class MTBNews(AbstractShop):
         self.url = "http://bikemarkt.mtb-news.de"
 
     def find_articles(self, search_term):
-        data = urllib.urlencode({"q_ft": search_term})
+        data = urllib.parse.urlencode({"q_ft": search_term})
         url = "http://bikemarkt.mtb-news.de/search/index?" + data
-        html = urllib2.urlopen(url)
+        html = urllib.request.urlopen(url)
         soup = bs4.BeautifulSoup(html)
         for tr in soup("tr"):
             if tr("h3"):
@@ -31,4 +31,4 @@ class MTBNews(AbstractShop):
 if __name__ == "__main__":
     shop = MTBNews()
     for a in shop.find_articles("Selle Italia Flite TT"):
-        print a.name, a.price, a.url
+        print((a.name, a.price, a.url))

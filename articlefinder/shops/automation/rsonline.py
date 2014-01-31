@@ -1,8 +1,10 @@
 #-*- coding: utf-8 -*-
-import urllib
+from http.client import HTTPResponse
+import urllib.request, urllib.parse, urllib.error
+import bs4
 from articlefinder.article import Article
 from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.utilities import extract_float, html_to_str
+from articlefinder.utilities import extract_float
 
 __author__ = 'lehmann'
 
@@ -13,20 +15,18 @@ class RSOnline(AbstractShop):
         self.name = "RS Online"
         self.url = "http://de.rs-online.com"
 
-    def _get_search_url(self, search_term):
-        url = urllib.basejoin(self.url, r"/web/c/")
-        search_term = "+".join(search_term.split())
-        url = url + "?searchTerm=" + search_term
-        return url
-
     def find_articles(self, search_term):
-        soup = self.get_html_soup(search_term)
+        data = urllib.parse.urlencode({"searchTerm": search_term})
+        url = self.url + "/web/c/?" + data
+        html = urllib.request.urlopen(url)
+        soup = bs4.BeautifulSoup(html)
+
         div = soup("div", class_="productDescriptionDiv")
         if div:
             #surprisingly only one product
             a = Article()
             div = div[0]
-            a.name = html_to_str(div("h1")[0].text)
+            a.name = div("h1")[0].text
             a.articlenr = soup("span", class_="keyValue")[0].text
             a.url = self.url + a.articlenr
             a.price = extract_float(soup("span", itemprop="price")[0].text)
@@ -39,7 +39,7 @@ class RSOnline(AbstractShop):
             for row in tbl:
                 link = row("a", class_="primarySearchLink")[0]
                 a = Article()
-                a.name = html_to_str(link.text)
+                a.name = link.text
                 a.url = self.url + link.get("href")
                 a.articlenr = row("a", class_="primarySearchLink")[2].text
                 a.brand = row("a", class_="secondarySearchLink")[1].text
@@ -50,5 +50,5 @@ class RSOnline(AbstractShop):
 
 if __name__ == "__main__":
     c = RSOnline()
-    for a in c.find_articles("PDU 2,5"):
-        print a.name, a.price, a.articlenr
+    for a in c.find_articles("Kabel 5G0,5"):
+        print(a.name, a.price, a.articlenr)
