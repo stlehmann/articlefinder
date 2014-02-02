@@ -15,18 +15,6 @@ class TableDimensionError(Exception):
         self.message = "Header and Attributes lists must have same length."
 
 
-def _get_attr_value(article, attr, max_len=50):
-    val = getattr(article, attr)
-    if attr == "price":
-        return locale.currency(val, symbol=False)
-    elif attr == "shop":
-        return val.name
-    elif attr == "url":
-        return val
-    else:
-        return limit_str(val, max_len)
-
-
 class TableFinder(SimpleFinder):
     def __init__(self):
         super(TableFinder, self).__init__()
@@ -35,6 +23,16 @@ class TableFinder(SimpleFinder):
         self._headers = []
         self._attributes = []
 
+    def get_attr_value(self, article, attr, max_len=50):
+        val = getattr(article, attr)
+        if attr == "price":
+            return locale.currency(val, symbol=False)
+        elif attr == "shop":
+            return val.name
+        elif attr == "url":
+            return val
+        else:
+            return limit_str(val, max_len)
     @property
     def headers(self):
         return self._headers
@@ -79,7 +77,7 @@ class TableFinder(SimpleFinder):
 
         def _get_table():
             for article in articles:
-                yield [_get_attr_value(article, attr) for attr in self._attributes]
+                yield [self.get_attr_value(article, attr) for attr in self._attributes]
 
         articles = TableFinder.sort(_find(search_term))
         content = _get_table()

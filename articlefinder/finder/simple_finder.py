@@ -14,5 +14,6 @@ class SimpleFinder(object):
         """
         def _find():
             for shop in self.shops:
-                yield shop.find_articles(search_term)
+                for a in shop.find_articles(search_term):
+                    yield a
         return list(_find())

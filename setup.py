@@ -4,7 +4,7 @@ setup(
     name='articlefinder',
     version='0.0.1',
     packages=['articlefinder', 'articlefinder.shops',
-              'articlefinder.shops.bike', 'articlefinder.shops.automation'],
+              'articlefinder.shops.bike', 'articlefinder.shops.automation', 'articlefinder.finder'],
     url='https://github.com/MrLeeh/articlefinder.git',
     license='GPL',
     author='Stefan Lehmann',
