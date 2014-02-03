@@ -10,7 +10,7 @@ T.pack(side=tkinter.LEFT, fill=tkinter.Y)
 s.config(command=T.yview)
 T.config(yscrollcommand=s.set)
 
-for i in range(40):q
+for i in range(40):
    T.insert(tkinter.END, "This is line %d\n" % i)
    T.yview(tkinter.MOVETO, 1.0)
 

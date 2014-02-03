@@ -6,58 +6,69 @@ from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
 from articlefinder.shops.bike.mtb_news import MTBNews
+from articlefinder.tk.hyperlinks import HyperlinkManager
+from articlefinder.utilities import limit_str
 
 
 __author__ = 'stefanlehmann'
-
+def get_char_count(articles, column="name"):
+        count = 0
+        for article in articles:
+            x = len(getattr(article, column))
+            if x > count:
+                count = x
+        return count
 
 class MyFinder(SimpleFinder):
     def __init__(self, text_widget):
         super(MyFinder, self).__init__()
         self.text_widget = text_widget
+        self.hyperlinks = HyperlinkManager(self.text_widget)
 
     def find(self, search_term):
-        articles = SimpleFinder.find(self, search_term)
-        for article in articles:
-            self.text_widget.insert("end", "\n" + article.name)
+        articles = SimpleFinder.sort(SimpleFinder.find(self, search_term))
+        for i, article in enumerate(articles, start=1):
+            self.text_widget.insert(
+                "end",
+                limit_str(article.shop.name,
+                          get_char_count(articles, column="shopname") + 1)
+            )
+            self.text_widget.insert(
+                "end",
+                limit_str(article.name,
+                          get_char_count(articles, column="name") + 1)
+            )
+            self.text_widget.insert("end", limit_str(format("%0.2f€") % article.price, 10))
+            self.text_widget.insert("end", "Link", self.hyperlinks.add(article.url))
+            self.text_widget.insert("end", "\n")
 
 
 
 def search(*args):
+    output.delete("1.0", "end")
     text = search_term.get()
     finder.find(text)
     output.insert(END, search_term.get())
     root.update_idletasks()
 
 
+#GUI objects
 root = Tk()
 root.title("Bike Parts Finder")
 
+output = Text(root)
+output.pack(side=BOTTOM, fill=BOTH, expand=1)
+output.config(wrap=NONE)
+
+search_label = ttk.Label(root, text="Suchtext:")
+search_label.pack(side=LEFT)
+
 search_term = StringVar()
+search_entry = ttk.Entry(root, textvariable=search_term)
+search_entry.pack(side=LEFT)
 
-mainframe = ttk.Frame(root, padding="3 3 12 12")
-mainframe.grid(column=0, row=0, sticky=(N, W, S, E))
-mainframe.columnconfigure(0, weight=1)
-mainframe.columnconfigure(1, weight=1)
-mainframe.columnconfigure(2, weight=1)
-mainframe.columnconfigure(3, weight=2)
-mainframe.rowconfigure(0, weight=0)
-mainframe.rowconfigure(1, weight=2)
-root.rowconfigure(0,weight=1)
-root.columnconfigure(0, weight=1)
-
-search_label = ttk.Label(mainframe, text="Suchtext:").grid(column=0, row=0)
-search_entry = ttk.Entry(mainframe, textvariable=search_term)
-search_entry.grid(column=1, row=0)
-search_button = ttk.Button(mainframe, text="Suchen", command=search).grid(column=2, row=0)
-
-output = Text(mainframe)
-output.grid(column=0, row=1, columnspan=4, sticky=(N, W, S, E))
-output.tag_config("a", foreground="blue", underline=1)
-scrollbar = Scrollbar(mainframe)
-scrollbar.grid(column=0, row=2, columnspan=4)
-scrollbar.config(command=output.yview)
-output.config(yscrollcommand=scrollbar.set)
+search_button = ttk.Button(root, text="Suchen", command=search)
+search_button.pack(side=RIGHT)
 
 #The Finder object
 finder = MyFinder(output)

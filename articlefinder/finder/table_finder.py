@@ -59,10 +59,6 @@ class TableFinder(SimpleFinder):
     def column_count(self):
         return len(self._headers)
 
-    @staticmethod
-    def sort(articles, attribute="price"):
-        return sorted(articles, key=operator.attrgetter(attribute))
-
     def find(self, search_term):
         def _find(search_term):
             print ("-----------------------")
