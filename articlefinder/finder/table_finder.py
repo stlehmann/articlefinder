@@ -2,12 +2,16 @@ from articlefinder.utilities import limit_str
 
 __author__ = 'lehmann'
 
+import platform
 import locale
 import operator
 from tabulate import tabulate
 from articlefinder.finder.simple_finder import SimpleFinder
 
-locale.setlocale(locale.LC_ALL, "de_DE.UTF-8")
+if platform.system()=="Windows":
+    locale.setlocale(locale.LC_ALL, "deu_deu")
+else:
+    locale.setlocale(locale.LC_ALL, "de_DE.UTF-8")
 
 
 class TableDimensionError(Exception):

@@ -10,6 +10,5 @@ setup(
     author='Stefan Lehmann',
     author_email='Stefan.St.Lehmann@gmail.com',
     description='Helper package for finding articles at a number of suppliers.',
-    requires=["beautifulsoup4", "tabulate"],
-    scripts=["scripts/find_am.py"]
+    requires=["beautifulsoup4", "tabulate"]
 )
