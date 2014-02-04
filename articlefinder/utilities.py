@@ -16,7 +16,7 @@ def abstractmethod(method):
 
 def extract_number(text):
     """
-    Extract a floating point number as text from a given string.
+    Extract a floating point number as text_widget from a given string.
 
     """
     return "".join(re.findall(r"[-+]?[0-9]*[\,.]?[0-9]", text))

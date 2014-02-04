@@ -1,5 +1,7 @@
 __author__ = 'lehmann'
 
+import operator
+
 
 class SimpleFinder(object):
     def __init__(self):
@@ -17,3 +19,7 @@ class SimpleFinder(object):
                 for a in shop.find_articles(search_term):
                     yield a
         return list(_find())
+
+    @staticmethod
+    def sort(articles, attribute="price"):
+        return sorted(articles, key=operator.attrgetter(attribute))

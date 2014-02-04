@@ -11,3 +11,8 @@ class Article(object):
         self.shop = None
         self.unit = 1
         self.brand = ""
+
+    @property
+    def shopname(self):
+        if self.shop is not None:
+            return self.shop.name
