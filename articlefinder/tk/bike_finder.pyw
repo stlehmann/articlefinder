@@ -1,3 +1,5 @@
+#! python3
+
 import sys
 from tkinter import *
 from tkinter import ttk
@@ -18,6 +20,7 @@ def get_char_count(articles, column="name"):
             if x > count:
                 count = x
         return count
+
 
 class MyFinder(SimpleFinder):
     def __init__(self, text_widget):
@@ -43,32 +46,44 @@ class MyFinder(SimpleFinder):
             self.text_widget.insert("end", "\n")
 
 
-
 def search(*args):
     output.delete("1.0", "end")
     text = search_term.get()
     finder.find(text)
     output.insert(END, search_term.get())
-    root.update_idletasks()
 
 
 #GUI objects
 root = Tk()
 root.title("Bike Parts Finder")
 
+yscrollbar = Scrollbar(root)
+yscrollbar.grid(column=4, row=1, sticky=(N, S))
+
+xscrollbar = Scrollbar(root, orient=HORIZONTAL)
+xscrollbar.grid(column=0, row=2, columnspan=3, sticky=(W, E))
+
 output = Text(root)
-output.pack(side=BOTTOM, fill=BOTH, expand=1)
+output.grid(column=0, row=1, columnspan=3, sticky=(N, S, W, E))
 output.config(wrap=NONE)
+output.config(yscrollcommand=yscrollbar.set)
+yscrollbar.config(command=output.yview)
+output.config(xscrollcommand=xscrollbar.set)
+xscrollbar.config(command=output.xview)
 
 search_label = ttk.Label(root, text="Suchtext:")
-search_label.pack(side=LEFT)
+search_label.grid(column=0, row=0)
 
 search_term = StringVar()
 search_entry = ttk.Entry(root, textvariable=search_term)
-search_entry.pack(side=LEFT)
+search_entry.grid(column=1, row=0, sticky=(W, E))
 
 search_button = ttk.Button(root, text="Suchen", command=search)
-search_button.pack(side=RIGHT)
+search_button.grid(column=2, row=0)
+
+root.columnconfigure(1, weight=1)
+root.columnconfigure(2, weight=0)
+root.rowconfigure(1, weight=1)
 
 #The Finder object
 finder = MyFinder(output)
