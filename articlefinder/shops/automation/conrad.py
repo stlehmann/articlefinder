@@ -11,11 +11,11 @@ class Conrad(AbstractShop):
     def __init__(self):
         super(Conrad, self).__init__()
         self.name = "Conrad"
-        self.url = "http://www.conrad.de/ce/de/"
+        self.url = "http://www.conrad.de"
 
     def find_articles(self, search_term):
         data = urllib.parse.urlencode({"search": search_term})
-        url = self.url + "Search.html?" + data
+        url = self.url + "/ce/de/Search.html?" + data
         html = urllib.request.urlopen(url)
         soup = bs4.BeautifulSoup(html)
 
@@ -26,6 +26,7 @@ class Conrad(AbstractShop):
             a.name = name("a")[0].text
             a.price = extract_float(div("span", class_="current-price")[0].text)
             a.articlenr = div("div", class_="bestnr")[0].strong.text
+            a.url = self.url + name("a")[0].get('href')
             a.shop = self
             yield a
 

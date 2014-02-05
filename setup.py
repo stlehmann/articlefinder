@@ -11,5 +11,6 @@ setup(
     author='Stefan Lehmann',
     author_email='Stefan.St.Lehmann@gmail.com',
     description='Helper package for finding articles at a number of suppliers.',
-    requires=["beautifulsoup4", "tabulate"]
+    requires=["beautifulsoup4", "tabulate"],
+    scripts=['scripts/find_electro.py', 'scripts/find_bike.py']
 )
