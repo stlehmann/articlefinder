@@ -6,6 +6,13 @@ __author__ = 'stefanlehmann'
 
 
 class AbstractShop (object):
+    """
+    Interface for Online-Shops.
+
+    :ivar name: Name of the shop
+    :ivar url: base url of the shop
+
+    """
     def __init__(self):
         super(AbstractShop, self).__init__()
         self.url = ""
@@ -14,7 +21,15 @@ class AbstractShop (object):
     @abstractmethod
     def find_articles(self, search_term):
         """
+        find_articles(self, search_term)
+
         Find a list of articles for the given search term.
+        Has to be implemented by the derived class.
+
+        :param search_term: term for finding the articles.s
+        :type search_term: basestring
+
+        :returns: Generator -- Article objects for the search result
 
         """
         raise NotImplementedError()
@@ -22,7 +37,10 @@ class AbstractShop (object):
     @abstractmethod
     def _get_search_url(self, search_term):
         """
+        _get_search_url(self, search_term)
+
         Create search URL with the given search term.
+        Has to be implemented by the derived class.
 
         """
         raise NotImplementedError()
@@ -31,8 +49,10 @@ class AbstractShop (object):
         """
         Create search URL and open it. Retrieve the HTML code as a
         Beautifulsoup object.
-        @param search_term: term to search for
-        @rtype: bs4.BeautifulSoup
+
+        :param search_term: term to search for
+        :type search_term: basestring
+        :returns: bs4.BeautifulSoup
 
         """
         url = self._get_search_url(search_term)

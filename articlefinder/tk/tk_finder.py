@@ -9,7 +9,7 @@ from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
 from articlefinder.shops.bike.mtb_news import MTBNews
 from articlefinder.tk.hyperlinks import HyperlinkManager
-from articlefinder.utilities import limit_str
+from articlefinder.utilities import limit
 
 __author__ = 'stefanlehmann'
 
@@ -34,15 +34,15 @@ class MyFinder(SimpleFinder):
         for i, article in enumerate(articles, start=1):
             self.text_widget.insert(
                 "end",
-                limit_str(article.shop.name,
+                limit(article.shop.name,
                           get_char_count(articles, column="shopname") + 1)
             )
             self.text_widget.insert(
                 "end",
-                limit_str(article.name,
+                limit(article.name,
                           get_char_count(articles, column="name") + 1)
             )
-            self.text_widget.insert("end", limit_str(format("%0.2f€") % article.price, 10))
+            self.text_widget.insert("end", limit(format("%0.2f€") % article.price, 10))
             self.text_widget.insert("end", "Link", self.hyperlinks.add(article.url))
             self.text_widget.insert("end", "\n")
 

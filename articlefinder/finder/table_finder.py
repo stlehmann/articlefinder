@@ -1,4 +1,4 @@
-from articlefinder.utilities import limit_str
+from articlefinder.utilities import limit
 
 __author__ = 'lehmann'
 
@@ -36,7 +36,7 @@ class TableFinder(SimpleFinder):
         elif attr == "url":
             return val
         else:
-            return limit_str(val, max_len)
+            return limit(val, max_len)
     @property
     def headers(self):
         return self._headers
