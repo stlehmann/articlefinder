@@ -1,4 +1,4 @@
 ==================
 TODO ArticleFinder
 ==================
-- implement packaging unit for RS Online
+* implement packaging unit for RS Online

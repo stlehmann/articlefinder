@@ -8,6 +8,9 @@ __author__ = 'lehmann'
 
 
 class Conrad(AbstractShop):
+    """
+
+    """
     def __init__(self):
         super(Conrad, self).__init__()
         self.name = "Conrad"

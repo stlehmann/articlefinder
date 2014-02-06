@@ -1,5 +1,6 @@
 .idea
 idea
-
+build/
+*.bat
 articlefinder.egg-info
 *.pyc
