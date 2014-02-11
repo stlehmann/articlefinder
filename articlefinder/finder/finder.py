@@ -3,9 +3,9 @@ __author__ = 'lehmann'
 import operator
 
 
-class SimpleFinder(object):
+class Finder(object):
     def __init__(self):
-        super(SimpleFinder, self).__init__()
+        super(Finder, self).__init__()
         self.shops = []
 
     def find(self, search_term):

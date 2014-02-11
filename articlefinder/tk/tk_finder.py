@@ -3,7 +3,7 @@
 import sys
 from tkinter import *
 from tkinter import ttk
-from articlefinder.finder import SimpleFinder
+from articlefinder.finder import Finder
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
@@ -23,14 +23,14 @@ def get_char_count(articles, column="name"):
         return count
 
 
-class MyFinder(SimpleFinder):
+class MyFinder(Finder):
     def __init__(self, text_widget):
         super(MyFinder, self).__init__()
         self.text_widget = text_widget
         self.hyperlinks = HyperlinkManager(self.text_widget)
 
     def find(self, search_term):
-        articles = SimpleFinder.sort(SimpleFinder.find(self, search_term))
+        articles = Finder.sort(Finder.find(self, search_term))
         for i, article in enumerate(articles, start=1):
             self.text_widget.insert(
                 "end",

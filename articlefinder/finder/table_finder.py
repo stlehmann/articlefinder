@@ -6,7 +6,7 @@ import platform
 import locale
 import operator
 from tabulate import tabulate
-from articlefinder.finder.simple_finder import SimpleFinder
+from articlefinder.finder.finder import Finder
 
 if platform.system()=="Windows":
     locale.setlocale(locale.LC_ALL, "deu_deu")
@@ -19,7 +19,7 @@ class TableDimensionError(Exception):
         self.message = "Header and Attributes lists must have same length."
 
 
-class TableFinder(SimpleFinder):
+class TableFinder(Finder):
     def __init__(self):
         super(TableFinder, self).__init__()
         self.tablefmt = "simple"

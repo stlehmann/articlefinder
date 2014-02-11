@@ -4,7 +4,7 @@ from operator import indexOf
 from PIL import Image
 from urllib.request import urlretrieve, urlopen
 from PIL.ImageTk import PhotoImage
-from articlefinder.finder.simple_finder import SimpleFinder
+from articlefinder.finder.finder import Finder
 from articlefinder.shops.automation.conrad import Conrad
 from articlefinder.shops.automation.rsonline import RSOnline
 from articlefinder.tk.hyperlinks import HyperlinkManager
@@ -15,14 +15,14 @@ __author__ = 'lehmann'
 from articlefinder.tk.tk_finder import TkFinder, get_char_count
 
 
-class MyFinder(SimpleFinder):
+class MyFinder(Finder):
     def __init__(self, text_widget):
         super(MyFinder, self).__init__()
         self.text_widget = text_widget
         self.hyperlinks = HyperlinkManager(self.text_widget)
 
     def find(self, search_term):
-        articles = SimpleFinder.sort(SimpleFinder.find(self, search_term))
+        articles = Finder.sort(Finder.find(self, search_term))
         for i, article in enumerate(articles, start=1):
             self.text_widget.insert(
                 "end",
