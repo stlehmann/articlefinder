@@ -1,3 +1,9 @@
+#! python3
+import io
+from operator import indexOf
+from PIL import Image
+from urllib.request import urlretrieve, urlopen
+from PIL.ImageTk import PhotoImage
 from articlefinder.finder.simple_finder import SimpleFinder
 from articlefinder.shops.automation.conrad import Conrad
 from articlefinder.shops.automation.rsonline import RSOnline
@@ -28,8 +34,10 @@ class MyFinder(SimpleFinder):
                 limit(article.name,
                           get_char_count(articles, column="name") + 1)
             )
-            self.text_widget.insert("end", article.articlenr, self.hyperlinks.add(article.url))
-            self.text_widget.insert("end", limit(format("%0.2f€") % article.price, 10))
+            self.text_widget.insert("end", article.articlenr,
+                                    self.hyperlinks.add(article.url))
+            price = format("%0.2f") % article.price
+            self.text_widget.insert("end", price.rjust(10))
             self.text_widget.insert("end", "\n")
 
 
@@ -37,7 +45,7 @@ class ElectroTkFinder(TkFinder):
     def __init__(self, shops):
         super(ElectroTkFinder, self).__init__(shops)
         self.finder = MyFinder(self.output)
-        self.shops = shops
+        self.finder.shops = shops
 
-w = TkFinder([RSOnline(), Conrad()])
+w = ElectroTkFinder([RSOnline(), Conrad()])
 w.mainloop()

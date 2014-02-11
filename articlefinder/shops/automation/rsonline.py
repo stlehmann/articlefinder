@@ -45,10 +45,12 @@ class RSOnline(AbstractShop):
                 a.brand = row("a", class_="secondarySearchLink")[1].text
                 a.price = extract_float(row("span", class_="price right5")[0].text)
                 a.brand = row("a", class_="secondarySearchLink")[1].text
+                a.image_url = row("img")[0]["src"]
                 a.shop = self
+
                 yield a
 
 if __name__ == "__main__":
     c = RSOnline()
-    for a in c.find_articles("Kabel 5G0,5"):
+    for a in c.find_articles("Lapp"):
         print(a.name, a.price, a.articlenr)
