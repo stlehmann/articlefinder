@@ -3,6 +3,7 @@
 import sys
 import webbrowser
 from PyQt5.Qt import Qt
+from PyQt5.QtCore import QTranslator
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, \
     QGridLayout, QPushButton, QTreeWidget, QTableView, QWidget
 from articlefinder.finder.finder import Finder
@@ -15,6 +16,7 @@ from articlefinder.shops.bike.mtb_news import MTBNews
 __author__ = 'stefanlehmann'
 
 
+
 class MainWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -24,12 +26,13 @@ class MainWindow(QWidget):
         self.model = ArticleListModel()
 
         #Search label and LineEdit
-        self.searchLabel = QLabel("Search term:")
+        self.searchLabel = QLabel(self.tr("Search term:"))
         self.searchLineEdit = QLineEdit()
         self.searchLabel.setBuddy(self.searchLineEdit)
+        self.searchLineEdit.returnPressed.connect(self.search)
 
         #Search Button
-        self.searchButton = QPushButton("Search")
+        self.searchButton = QPushButton(self.tr("Search"))
 
         #Results
         self.resultTable = QTableView()
@@ -78,6 +81,9 @@ class MainWindow(QWidget):
 
 if __name__=="__main__":
     app = QApplication(sys.argv)
+    translator = QTranslator()
+    translator.load("mainwindow.qm")
+    app.installTranslator(translator)
     w = MainWindow()
     w.show()
     app.exec_()

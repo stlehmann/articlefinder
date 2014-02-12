@@ -67,13 +67,13 @@ class ArticleListModel(QAbstractTableModel):
         if role == Qt.DisplayRole:
             if orientation == Qt.Horizontal:
                 if section == NAME:
-                    return "name"
+                    return self.tr("Name")
                 if section == ARTICLE_NR:
-                    return "articlenr"
+                    return self.tr("Article Nr")
                 if section == PRICE:
-                    return "price"
+                    return self.tr("Price")
                 if section == SHOP:
-                    return "shop"
+                    return self.tr("Shop")
             else:
                 return QVariant(int(section + 1))
         else:
