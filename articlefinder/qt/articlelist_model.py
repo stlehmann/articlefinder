@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QModelIndex, Qt, QVariant, \
-    QAbstractTableModel
+    QAbstractTableModel, QSize
 import operator
+from PyQt5.QtGui import QBrush, QFontMetrics, QFont
 
 __author__ = 'stefanlehmann'
 
@@ -26,6 +27,7 @@ class ArticleListModel(QAbstractTableModel):
     def columnCount(self, index=QModelIndex()):
         return 4
 
+
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid() or not (0 <= index.row() <= len(self.articles)):
             return QVariant()
@@ -44,10 +46,21 @@ class ArticleListModel(QAbstractTableModel):
 
         if role == Qt.TextAlignmentRole:
             if column == PRICE:
-                return Qt.AlignRight
+                return Qt.AlignRight | Qt.AlignVCenter
             else:
-                return Qt.AlignLeft
+                return Qt.AlignLeft | Qt.AlignVCenter
 
+        if role == Qt.ForegroundRole:
+            if column == NAME:
+                return QBrush(Qt.blue)
+
+        if role == Qt.SizeHintRole:
+            if column == NAME:
+                fm = QFontMetrics(QFont(self.data(index, Qt.FontRole)))
+                w = fm.width(article.name)
+                w = w if w < 500 else 250
+                h = fm.height()
+                return QSize(w, h)
         return QVariant()
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
@@ -68,7 +81,7 @@ class ArticleListModel(QAbstractTableModel):
 
     def sort(self, column, order=Qt.AscendingOrder):
         self.beginResetModel()
-        attribute = ['name', 'articlenr', 'price', 'shop']
+        attribute = ['name', 'articlenr', 'price', 'shopname']
         self.articles = sorted(self.articles,
                                key=operator.attrgetter(attribute[column]),
                                reverse=order == Qt.DescendingOrder)

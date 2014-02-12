@@ -1,9 +1,12 @@
-from PyQt5.Qt import Qt
+#! python3
+
 import sys
+import webbrowser
+from PyQt5.Qt import Qt
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, \
-    QGridLayout, QPushButton, QTreeWidget, QTableView
+    QGridLayout, QPushButton, QTreeWidget, QTableView, QWidget
 from articlefinder.finder.finder import Finder
-from articlefinder.qt.articlelist_model import ArticleListModel, PRICE
+from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
@@ -12,7 +15,7 @@ from articlefinder.shops.bike.mtb_news import MTBNews
 __author__ = 'stefanlehmann'
 
 
-class MainWindow(QDialog):
+class MainWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -32,6 +35,9 @@ class MainWindow(QDialog):
         self.resultTable = QTableView()
         self.resultTable.setSortingEnabled(True)
         self.resultTable.setModel(self.model)
+        self.resultTable.setMouseTracking(True)
+        self.resultTable.clicked.connect(self.open_url)
+        self.resultTable.mouseMoveEvent = self.resultTable_mouseMove
 
         #Layout
         self.setLayout(QGridLayout())
@@ -51,6 +57,24 @@ class MainWindow(QDialog):
 
         self.resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
         self.resultTable.resizeColumnsToContents()
+
+    def open_url(self, event):
+        index = self.resultTable.currentIndex()
+        if index.isValid():
+            if index.column() == NAME:
+                article = self.model.articles[index.row()]
+                webbrowser.open_new_tab(article.url)
+
+    def resultTable_mouseMove(self, event):
+        index = self.resultTable.indexAt(event.pos())
+        if not index.isValid():
+            self.resultTable.unsetCursor()
+
+        if index.column() == NAME:
+            self.resultTable.setCursor(Qt.PointingHandCursor)
+        else:
+            self.resultTable.unsetCursor()
+
 
 if __name__=="__main__":
     app = QApplication(sys.argv)
