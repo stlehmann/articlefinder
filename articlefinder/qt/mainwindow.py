@@ -5,7 +5,8 @@ import webbrowser
 from PyQt5.Qt import Qt
 from PyQt5.QtCore import QTranslator
 from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, \
-    QGridLayout, QPushButton, QTreeWidget, QTableView, QWidget
+    QGridLayout, QPushButton, QTreeWidget, QTableView, QWidget, QListWidget, \
+    QSplitter, QListWidgetItem
 from articlefinder.finder.finder import Finder
 from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
 from articlefinder.shops.bike.bike24 import Bike24
@@ -16,14 +17,24 @@ from articlefinder.shops.bike.mtb_news import MTBNews
 __author__ = 'stefanlehmann'
 
 
-
 class MainWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
         self.finder = Finder()
-        self.finder.shops = [Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]
+        self.suppliers = [Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]
+        self.finder.shops = self.suppliers
         self.model = ArticleListModel()
+
+        self.leftsideWidget = QWidget()
+        self.rightsideWidget = QWidget()
+        self.splitter = QSplitter()
+        self.splitter.addWidget(self.leftsideWidget)
+        self.splitter.addWidget(self.rightsideWidget)
+        self.splitter.setSizes((30, 70))
+
+        #supplier list
+        self.suppliersListWidget = QListWidget()
 
         #Search label and LineEdit
         self.searchLabel = QLabel(self.tr("Search term:"))
@@ -47,12 +58,24 @@ class MainWindow(QWidget):
         self.layout().addWidget(self.searchLabel, 0, 0)
         self.layout().addWidget(self.searchLineEdit, 0, 1)
         self.layout().addWidget(self.searchButton, 0, 2)
-        self.layout().addWidget(self.resultTable, 1, 0, 1, 3)
+        self.layout().addWidget(self.splitter, 1, 0, 1, 3)
+        self.rightsideWidget.setLayout(QGridLayout())
+        self.rightsideWidget.layout().addWidget(self.resultTable, 1, 0, 1, 3)
+        self.leftsideWidget.setLayout(QGridLayout())
+        self.leftsideWidget.layout().addWidget(self.suppliersListWidget, 0, 0)
 
+        self.fill_supplier_list()
         self.resize(800, 600)
         self.searchButton.pressed.connect(self.search)
 
     def search(self):
+        def _get_suppliers():
+            for row in range(self.suppliersListWidget.count()):
+                item = self.suppliersListWidget.item(row)
+                if item.checkState():
+                    yield item.data(Qt.UserRole)
+        self.finder.shops = list(_get_suppliers())
+        print(self.finder.shops)
         self.model.beginResetModel()
         search_term = self.searchLineEdit.text()
         self.model.articles = self.finder.find(search_term)
@@ -60,6 +83,16 @@ class MainWindow(QWidget):
 
         self.resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
         self.resultTable.resizeColumnsToContents()
+        self.resultTable.resizeRowsToContents()
+
+    def fill_supplier_list(self):
+        self.suppliersListWidget.clear()
+        for s in self.suppliers:
+            item = QListWidgetItem(s.name)
+            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
+            item.setCheckState(Qt.Checked)
+            item.setData(Qt.UserRole, s)
+            self.suppliersListWidget.addItem(item)
 
     def open_url(self, event):
         index = self.resultTable.currentIndex()

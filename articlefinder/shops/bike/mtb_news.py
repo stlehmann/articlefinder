@@ -26,6 +26,7 @@ class MTBNews(AbstractShop):
                 a.name = tr("h3")[0].a.text
                 a.price = extract_float(tr("td", class_="articlePrice")[0].text)
                 a.url = self.url + tr("h3")[0]("a")[0]["href"]
+                a.image_url = tr.img.get("src")
                 yield a
 
 if __name__ == "__main__":

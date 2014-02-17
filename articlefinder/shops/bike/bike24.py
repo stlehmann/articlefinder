@@ -46,6 +46,7 @@ class Bike24(AbstractShop):
             a.url = self.url + "/" + row("a")[0].get("href")
             a.price = extract_float(row("td")[2].text)
             a.articlenr = _get_productid(a.url)
+            a.image_url = self.url + "/" + row.img.get("src")
             yield a
 
 if __name__ == "__main__":

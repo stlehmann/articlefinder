@@ -1,11 +1,13 @@
+from urllib.request import urlretrieve, urlopen
 from PyQt5.QtCore import QModelIndex, Qt, QVariant, \
-    QAbstractTableModel, QSize
+    QAbstractTableModel, QSize, QByteArray
 import operator
-from PyQt5.QtGui import QBrush, QFontMetrics, QFont
+from PyQt5.QtGui import QBrush, QFontMetrics, QFont, QImage, QPixmap
 
 __author__ = 'stefanlehmann'
 
-NAME, ARTICLE_NR, PRICE, SHOP = range(4)
+COLUMN_COUNT = 4
+IMAGE, NAME, PRICE, SHOP = range(COLUMN_COUNT)
 
 
 class ArticleListModel(QAbstractTableModel):
@@ -16,7 +18,6 @@ class ArticleListModel(QAbstractTableModel):
 
     """
 
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.articles = []
@@ -25,8 +26,7 @@ class ArticleListModel(QAbstractTableModel):
         return len(self.articles)
 
     def columnCount(self, index=QModelIndex()):
-        return 4
-
+        return COLUMN_COUNT
 
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid() or not (0 <= index.row() <= len(self.articles)):
@@ -35,16 +35,18 @@ class ArticleListModel(QAbstractTableModel):
         article = self.articles[index.row()]
         column = index.column()
         if role == Qt.DisplayRole:
-            if column == NAME :
+            if column == IMAGE:
+                return ""
+            if column == NAME:
                 return article.name
-            if column == ARTICLE_NR:
-                return article.articlenr
             if column == PRICE:
                 return "%0.2f€" % article.price
             if column == SHOP:
                 return article.shopname
 
         if role == Qt.TextAlignmentRole:
+            if column == IMAGE:
+                return Qt.AlignCenter | Qt.AlignVCenter
             if column == PRICE:
                 return Qt.AlignRight | Qt.AlignVCenter
             else:
@@ -61,6 +63,13 @@ class ArticleListModel(QAbstractTableModel):
                 w = w if w < 500 else 250
                 h = fm.height()
                 return QSize(w, h)
+
+        if role == Qt.DecorationRole:
+            if column == IMAGE:
+                if article.image is None:
+                    return QVariant()
+                return article.image.scaledToHeight(50)
+
         return QVariant()
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
@@ -68,8 +77,6 @@ class ArticleListModel(QAbstractTableModel):
             if orientation == Qt.Horizontal:
                 if section == NAME:
                     return self.tr("Name")
-                if section == ARTICLE_NR:
-                    return self.tr("Article Nr")
                 if section == PRICE:
                     return self.tr("Price")
                 if section == SHOP:
@@ -81,7 +88,7 @@ class ArticleListModel(QAbstractTableModel):
 
     def sort(self, column, order=Qt.AscendingOrder):
         self.beginResetModel()
-        attribute = ['name', 'articlenr', 'price', 'shopname']
+        attribute = ['name', 'name', 'price', 'shopname']
         self.articles = sorted(self.articles,
                                key=operator.attrgetter(attribute[column]),
                                reverse=order == Qt.DescendingOrder)

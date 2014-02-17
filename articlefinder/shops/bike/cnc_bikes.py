@@ -34,6 +34,7 @@ class CNCBikes(AbstractShop):
             special_price = row("span", class_="productSpecialPrice")
             a.price = extract_float(special_price[0].text
                       if special_price else row("td")[2].text)
+            a.image_url = self.url + "/" + row.img.get("src")
             yield a
 
     def find_articles(self, search_term):

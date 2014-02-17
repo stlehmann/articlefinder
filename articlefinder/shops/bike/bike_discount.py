@@ -29,7 +29,7 @@ class BikeDiscount(AbstractShop):
             for row in rows:
                 a = Article()
                 a.shop = self
-                a.name = row(class_="name")[0].a.text
+                a.name = row(class_="name")[0].a.text.strip()
                 a.brand = row(class_="name")[0].b.text
                 a.price = extract_float(row(class_="price")[0].text)
                 yield a
@@ -39,9 +39,10 @@ class BikeDiscount(AbstractShop):
                 a = Article()
                 a.shop = self
                 a.brand = row.a.text
-                a.name = row.a.next_sibling.text
+                a.name = row.a.next_sibling.text.strip()
                 a.url = self.url + "/" + row("a")[1]["href"]
                 a.price = extract_float(row(class_="priceteaser")[0].text)
+                a.image_url = row.img.get("data-original")
                 yield a
 
 

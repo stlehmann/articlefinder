@@ -1,3 +1,7 @@
+from io import StringIO
+import urllib.request
+from PyQt5.QtGui import QImage, QPixmap
+
 __author__ = 'stefanlehmann'
 
 
@@ -26,6 +30,19 @@ class Article(object):
         self.units = 1
         self.brand = ""
         self.image_url = ""
+        self._image = None
+
+    @property
+    def image(self):
+        if not self.image_url:
+            return None
+
+        if self._image is None:
+            response = urllib.request.urlopen(self.image_url).read()
+            self._image = QPixmap()
+            self._image.loadFromData(response)
+
+        return self._image
 
     @property
     def shopname(self):
