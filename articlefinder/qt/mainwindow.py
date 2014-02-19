@@ -1,4 +1,5 @@
 #! python3
+import os
 
 import sys
 import webbrowser
@@ -18,11 +19,11 @@ __author__ = 'stefanlehmann'
 
 
 class MainWindow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, shops, parent=None):
         super().__init__(parent)
 
         self.finder = Finder()
-        self.suppliers = [Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]
+        self.suppliers = shops
         self.finder.shops = self.suppliers
         self.model = ArticleListModel()
 
@@ -112,11 +113,15 @@ class MainWindow(QWidget):
             self.resultTable.unsetCursor()
 
 
-if __name__=="__main__":
+def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
     app = QApplication(sys.argv)
     translator = QTranslator()
-    translator.load("mainwindow.qm")
+    tf = os.path.join(os.path.dirname(__file__), "articlefinder_de.qm")
+    translator.load(tf)
     app.installTranslator(translator)
-    w = MainWindow()
+    w = MainWindow(shops)
     w.show()
     app.exec_()
+
+if __name__=="__main__":
+    run()
