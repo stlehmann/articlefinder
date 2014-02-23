@@ -21,18 +21,18 @@ class ArticleListModel(QAbstractTableModel):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.articles = []
-
-    def rowCount(self, index=QModelIndex()):
-        return len(self.articles)
+        self.visible_articles = []
+        self._sort_column = 2
+        self._sort_order = Qt.AscendingOrder
 
     def columnCount(self, index=QModelIndex()):
         return COLUMN_COUNT
 
     def data(self, index, role=Qt.DisplayRole):
-        if not index.isValid() or not (0 <= index.row() <= len(self.articles)):
+        if not index.isValid() or not (0 <= index.row() <= len(self.visible_articles)):
             return QVariant()
 
-        article = self.articles[index.row()]
+        article = self.visible_articles[index.row()]
         column = index.column()
         if role == Qt.DisplayRole:
             if column == IMAGE:
@@ -86,10 +86,21 @@ class ArticleListModel(QAbstractTableModel):
         else:
             return QVariant()
 
+    def refresh(self):
+        self.beginResetModel()
+        self.visible_articles = [a for a in self.articles if a.visible]
+        self.sort(self._sort_column, self._sort_order)
+        self.endResetModel()
+
+    def rowCount(self, index=QModelIndex()):
+        return len(self.visible_articles)
+
     def sort(self, column, order=Qt.AscendingOrder):
+        self._sort_column = column
+        self._sort_order = order
         self.beginResetModel()
         attribute = ['name', 'name', 'price', 'shopname']
-        self.articles = sorted(self.articles,
+        self.visible_articles = sorted(self.visible_articles,
                                key=operator.attrgetter(attribute[column]),
                                reverse=order == Qt.DescendingOrder)
         self.endResetModel()

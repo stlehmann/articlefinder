@@ -1,4 +1,5 @@
 from io import StringIO
+import socket
 import urllib.request
 from PyQt5.QtGui import QImage, QPixmap
 
@@ -31,16 +32,31 @@ class Article(object):
         self.brand = ""
         self.image_url = ""
         self._image = None
+        self.visible = True
+
+    def download_image(self):
+        """
+        Download the image defined by :attr:`image_url` and store in :attr:`_image`
+
+        """
+        if not self.image_url:
+            return None
+        try:
+            response = urllib.request.urlopen(self.image_url, timeout=2).read()
+            self._image = QPixmap()
+            self._image.loadFromData(response)
+        except (socket.timeout, urllib.error.URLError):
+            return None
 
     @property
     def image(self):
-        if not self.image_url:
-            return None
+        """
+        Image of the article.
 
+        :rtype: QPixmap
+        """
         if self._image is None:
-            response = urllib.request.urlopen(self.image_url).read()
-            self._image = QPixmap()
-            self._image.loadFromData(response)
+            self.download_image()
 
         return self._image
 
