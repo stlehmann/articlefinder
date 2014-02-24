@@ -185,15 +185,18 @@ class MainWindow(QMainWindow):
                     a.visible = item.checkState()
         self.model.refresh()
 
-
-if __name__=="__main__":
+def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
     app = QApplication(sys.argv)
     QCoreApplication.setApplicationName("Bike Finder")
     QCoreApplication.setApplicationVersion("1.0.1")
     QCoreApplication.setOrganizationName("Stefan Lehmann")
     translator = QTranslator()
-    translator.load("mainwindow.qm")
+    tf = os.path.join(os.path.dirname(__file__), "articlefinder_de.qm")
+    translator.load(tf)
     app.installTranslator(translator)
     w = MainWindow()
     w.show()
     app.exec_()
+
+if __name__=="__main__":
+    run()

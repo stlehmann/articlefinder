@@ -8,4 +8,4 @@ from articlefinder.qt import mainwindow
 __author__ = 'lehmann'
 
 
-mainwindow.run([Bike24(), BikeDiscount(), MTBNews(), CNCBikes])
+mainwindow.run([Bike24(), BikeDiscount(), MTBNews(), CNCBikes()])
