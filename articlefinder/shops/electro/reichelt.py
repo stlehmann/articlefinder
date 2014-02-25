@@ -21,9 +21,12 @@ class Reichelt(AbstractShop):
         for div in divs:
             a = Article()
             a.name = div("a", class_="al_artinfo_link")[0].text
-            a.url = div("a", class_="al_artinfo_link")[0].src
+            a.url = div("a", class_="al_artinfo_link")[0].get("href")
             a.articlenr = div("span", class_="dvartnr")[0].a.text
-            a.price = extract_float(div("p", class_="preisRechts")[0].text)
+            try:
+               a.price = extract_float(div("p", class_="preisRechts")[0].text)
+            except IndexError:
+               a.price = 0.0
             a.image_url = div("div", class_="al_artlogo")[0].img.get("data-original")
             a.shop = self
             yield a

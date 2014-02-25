@@ -1,5 +1,6 @@
 #! python3
 
+import os
 import sys
 import webbrowser
 from PyQt5.Qt import Qt
@@ -85,7 +86,7 @@ class SuppliersDockWidget(QDockWidget):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, shops, parent=None):
         super().__init__(parent)
 
         self.worker = WorkerThread()
@@ -93,7 +94,7 @@ class MainWindow(QMainWindow):
         self.worker.progress.connect(self.progress)
         self.progressDlg = QProgressDialog()
         self.progressDlg.canceled.connect(self.worker.quit)
-        self.suppliers = [Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]
+        self.suppliers = shops
         self.model = ArticleListModel()
 
         self.setCentralWidget(CentralWidget())
@@ -113,7 +114,7 @@ class MainWindow(QMainWindow):
         try:
             self.restoreState(QSettings().value(WINDOW_STATE_SETTING))
             self.restoreGeometry(QSettings().value(WINDOW_GEOMETRY_SETTING))
-        except AttributeError:
+        except (AttributeError, TypeError):
             self.resize(600, 800)
 
     def closeEvent(self, event):
@@ -145,7 +146,7 @@ class MainWindow(QMainWindow):
         index = self.centralWidget().resultTable.currentIndex()
         if index.isValid():
             if index.column() == NAME:
-                article = self.model.articles[index.row()]
+                article = self.model.visible_articles[index.row()]
                 webbrowser.open_new_tab(article.url)
 
     def progress(self, i, max, shopname):
@@ -173,6 +174,7 @@ class MainWindow(QMainWindow):
         self.worker.search_term = self.centralWidget().searchLineEdit.text()
         self.progressDlg.setMinimum(0)
         self.progressDlg.setMaximum(len(self.worker.shops))
+        self.progressDlg.setModal(True)
         self.progressDlg.show()
         self.worker.start()
 
@@ -194,7 +196,7 @@ def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
     tf = os.path.join(os.path.dirname(__file__), "articlefinder_de.qm")
     translator.load(tf)
     app.installTranslator(translator)
-    w = MainWindow()
+    w = MainWindow(shops)
     w.show()
     app.exec_()
 
