@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
         #supplier list
         self.suppliersDockWidget = SuppliersDockWidget()
         self.suppliersListWidget = self.suppliersDockWidget.suppliersListWidget
-        self.suppliersListWidget.itemChanged.connect(self.suppliers_changed)
+        self.suppliersListWidget.itemChanged.connect(self.filter_checked_suppliers)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.suppliersDockWidget)
 
         self.fill_supplier_list()
@@ -130,10 +130,20 @@ class MainWindow(QMainWindow):
             item.setData(Qt.UserRole, s)
             self.suppliersListWidget.addItem(item)
 
+    def filter_checked_suppliers(self):
+        for row in range(self.suppliersListWidget.count()):
+            item = self.suppliersListWidget.item(row)
+            shop = item.data(Qt.UserRole)
+            for a in self.model.articles:
+                if a.shopname == shop.name:
+                    a.visible = item.checkState()
+        self.model.refresh()
+
     def finished(self):
         self.progressDlg.close()
         self.model.beginResetModel()
         self.model.articles = self.worker.articles
+        self.filter_checked_suppliers()
         self.model.refresh()
         self.model.endResetModel()
 
@@ -167,23 +177,15 @@ class MainWindow(QMainWindow):
         def _get_suppliers():
             for row in range(self.suppliersListWidget.count()):
                 item = self.suppliersListWidget.item(row)
-                if item.checkState():
-                    yield item.data(Qt.UserRole)
+                yield item.data(Qt.UserRole)
+
         self.worker.shops = list(_get_suppliers())
         self.worker.search_term = self.centralWidget().searchLineEdit.text()
         self.progressDlg.setMinimum(0)
         self.progressDlg.setMaximum(len(self.worker.shops))
+        self.progressDlg.setModal(True)
         self.progressDlg.show()
         self.worker.start()
-
-    def suppliers_changed(self):
-        for row in range(self.suppliersListWidget.count()):
-            item = self.suppliersListWidget.item(row)
-            shop = item.data(Qt.UserRole)
-            for a in self.model.articles:
-                if a.shopname == shop.name:
-                    a.visible = item.checkState()
-        self.model.refresh()
 
 
 if __name__=="__main__":
