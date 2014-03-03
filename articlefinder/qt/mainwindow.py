@@ -212,5 +212,5 @@ def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
     app.exec_()
 
 
-if __name__== "__main__":
+if __name__ == "__main__":
     run()
