@@ -22,6 +22,7 @@ class ArticleListModel(QAbstractTableModel):
         super().__init__(parent)
         self.articles = []
         self.visible_articles = []
+        self.table = None
         self._sort_column = 2
         self._sort_order = Qt.AscendingOrder
 
@@ -68,8 +69,18 @@ class ArticleListModel(QAbstractTableModel):
             if column == IMAGE:
                 if article.image is None:
                     return QVariant()
-                return article.image.scaledToHeight(50)
-
+                #Scale the image to cell size if larger
+                #----------------------------------------------------
+                row_height = self.table.rowHeight(index.row())
+                column_width = self.table.columnWidth(index.column())
+                img = article.image
+                #scale height
+                if img.height() > row_height:
+                    img = img.scaledToHeight(row_height)
+                #scale width
+                if img.width() > column_width:
+                    img = img.scaledToWidth(column_width)
+                return img
         return QVariant()
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):

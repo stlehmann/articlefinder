@@ -17,6 +17,7 @@ class Article(object):
     :ivar image_url: (basestring) url to the article image
     :ivar price: (float) price of the article
     :ivar units: (int) number of units in one package
+    :ivar QPixmap image: image of the article
 
     """
 
@@ -44,6 +45,7 @@ class Article(object):
         try:
             response = urllib.request.urlopen(self.image_url, timeout=2).read()
             self.image = QPixmap()
+            self.image.load
             self.image.loadFromData(response)
         except (socket.timeout, urllib.error.URLError):
             return None

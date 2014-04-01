@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, \
     QMainWindow
 from docutils.nodes import transition
 from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
+from articlefinder.qt.widgets.CentralWidget import CentralWidget
+from articlefinder.qt.widgets.SuppliersDockWidget import SuppliersDockWidget
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
@@ -21,6 +23,8 @@ __author__ = 'stefanlehmann'
 
 WINDOW_STATE_SETTING = "WindowState"
 WINDOW_GEOMETRY_SETTING = "WindowGeometry"
+HORIZONTAL_HEADER_SETTING = "HorizontalHeader"
+VERTICAL_HEADER_SETTING = "VerticalHeader"
 
 
 class WorkerThread(QThread):
@@ -61,40 +65,6 @@ class WorkerThread(QThread):
         self._cancel = True
 
 
-class CentralWidget(QWidget):
-    def __init__(self):
-        super(CentralWidget, self).__init__()
-
-        #Search label and LineEdit
-        self.searchLabel = QLabel(self.tr("Search term:"))
-        self.searchLineEdit = QLineEdit()
-        self.searchLabel.setBuddy(self.searchLineEdit)
-
-        #Search Button
-        self.searchButton = QPushButton(self.tr("Search"))
-
-        #Results
-        self.resultTable = QTableView()
-        self.resultTable.setSortingEnabled(True)
-        self.resultTable.setMouseTracking(True)
-
-        #Layout
-        self.setLayout(QGridLayout())
-        self.layout().addWidget(self.searchLabel, 0, 0)
-        self.layout().addWidget(self.searchLineEdit, 0, 1)
-        self.layout().addWidget(self.searchButton, 0, 2)
-        self.layout().addWidget(self.resultTable, 1, 0, 1, 3)
-
-
-class SuppliersDockWidget(QDockWidget):
-    def __init__(self, parent=None):
-        super(SuppliersDockWidget, self).__init__(parent)
-        self.setObjectName("SuppliersDockWidget")
-        self.setWindowTitle(self.tr("Supplier list"))
-        self.suppliersListWidget = QListWidget()
-        self.setWidget(self.suppliersListWidget)
-
-
 class MainWindow(QMainWindow):
     def __init__(self, shops, parent=None):
         super().__init__(parent)
@@ -107,7 +77,9 @@ class MainWindow(QMainWindow):
         self.model = ArticleListModel()
 
         self.setCentralWidget(CentralWidget())
-        self.centralWidget().resultTable.setModel(self.model)
+        self.table = self.centralWidget().resultTable
+        self.table.setModel(self.model)
+        self.model.table = self.centralWidget().resultTable
         self.centralWidget().searchLineEdit.returnPressed.connect(self.search)
         self.centralWidget().resultTable.clicked.connect(self.open_url)
         self.centralWidget().searchButton.pressed.connect(self.search)
@@ -120,15 +92,31 @@ class MainWindow(QMainWindow):
         self.addDockWidget(Qt.LeftDockWidgetArea, self.suppliersDockWidget)
 
         self.fill_supplier_list()
+
         try:
             self.restoreState(QSettings().value(WINDOW_STATE_SETTING))
             self.restoreGeometry(QSettings().value(WINDOW_GEOMETRY_SETTING))
+            self.table.horizontalHeader().restoreState(
+                QSettings().value(HORIZONTAL_HEADER_SETTING)
+            )
+            self.table.verticalHeader().restoreState(
+                QSettings().value(VERTICAL_HEADER_SETTING)
+            )
         except (AttributeError, TypeError):
             self.resize(600, 800)
 
     def closeEvent(self, event):
         QSettings().setValue(WINDOW_STATE_SETTING, self.saveState())
         QSettings().setValue(WINDOW_GEOMETRY_SETTING, self.saveGeometry())
+        QSettings().setValue(
+            HORIZONTAL_HEADER_SETTING,
+            self.table.horizontalHeader().saveState()
+        )
+        QSettings().setValue(
+            VERTICAL_HEADER_SETTING,
+            self.table.verticalHeader().saveState()
+        )
+
         QMainWindow.closeEvent(self, event)
 
     def fill_supplier_list(self):
@@ -198,8 +186,6 @@ class MainWindow(QMainWindow):
         self.model.endResetModel()
 
         self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
-        self.centralWidget().resultTable.resizeColumnsToContents()
-        self.centralWidget().resultTable.resizeRowsToContents()
 
     def suppliers_changed(self):
         for row in range(self.suppliersListWidget.count()):
@@ -215,7 +201,7 @@ def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()],
         title="Articlefinder"):
 
     app = QApplication(sys.argv)
-    QCoreApplication.setApplicationName("Bike Finder")
+    QCoreApplication.setApplicationName(title)
     QCoreApplication.setApplicationVersion("1.0.1")
     QCoreApplication.setOrganizationName("Stefan Lehmann")
     translator = QTranslator()
