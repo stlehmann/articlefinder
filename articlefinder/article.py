@@ -31,7 +31,7 @@ class Article(object):
         self.units = 1
         self.brand = ""
         self.image_url = ""
-        self._image = None
+        self.image = None
         self.visible = True
 
     def download_image(self):
@@ -43,22 +43,10 @@ class Article(object):
             return None
         try:
             response = urllib.request.urlopen(self.image_url, timeout=2).read()
-            self._image = QPixmap()
-            self._image.loadFromData(response)
+            self.image = QPixmap()
+            self.image.loadFromData(response)
         except (socket.timeout, urllib.error.URLError):
             return None
-
-    @property
-    def image(self):
-        """
-        Image of the article.
-
-        :rtype: QPixmap
-        """
-        if self._image is None:
-            self.download_image()
-
-        return self._image
 
     @property
     def shopname(self):

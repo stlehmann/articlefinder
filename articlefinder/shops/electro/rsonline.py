@@ -28,7 +28,7 @@ class RSOnline(AbstractShop):
             div = div[0]
             a.name = div("h1")[0].text
             a.articlenr = soup("span", class_="keyValue")[0].text
-            a.url = self.url + "/web/c/?searchTerm=" + a.articlenr
+            a.url = self.url + "/web/c/?searchTerm=" + a.articlenrn
             a.price = extract_float(soup("span", itemprop="price")[0].text)
             a.brand = soup("span", class_="keyValue")[1].text
             a.shop = self
@@ -47,7 +47,6 @@ class RSOnline(AbstractShop):
                 a.brand = row("a", class_="secondarySearchLink")[1].text
                 a.image_url = row("img")[0]["src"]
                 a.shop = self
-
                 yield a
 
 if __name__ == "__main__":

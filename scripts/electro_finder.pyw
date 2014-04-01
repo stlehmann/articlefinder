@@ -7,4 +7,4 @@ __author__ = 'lehmann'
 
 from articlefinder.qt import mainwindow
 
-mainwindow.run([Conrad(), RSOnline(), Reichelt()])
+mainwindow.run([Conrad(), RSOnline(), Reichelt()], title="Electro Finder")

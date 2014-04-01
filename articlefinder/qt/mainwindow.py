@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, \
     QGridLayout, QPushButton, QTableView, QWidget, QListWidget, \
     QSplitter, QListWidgetItem, QProgressDialog, QToolBox, QDockWidget, \
     QMainWindow
+from docutils.nodes import transition
 from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
@@ -44,11 +45,20 @@ class WorkerThread(QThread):
                 self.progress.emit(i, len(self.shops), "Suche Artikel bei %s" % shop.name)
                 for a in shop.find_articles(self.search_term):
                     yield a
+                    if self._cancel:
+                        return
 
+        self._cancel = False
         self.articles = list(_find())
+        self._cancel = False
         for i, article in enumerate(self.articles):
+            if self._cancel:
+                return
             self.progress.emit(i, len(self.articles), "Bilder herunterladen")
             article.download_image()
+
+    def quit(self):
+        self._cancel = True
 
 
 class CentralWidget(QWidget):
@@ -90,10 +100,9 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
 
         self.worker = WorkerThread()
-        self.worker.finished.connect(self.finished)
+        self.worker.finished.connect(self.search_finished)
         self.worker.progress.connect(self.progress)
-        self.progressDlg = QProgressDialog()
-        self.progressDlg.canceled.connect(self.worker.quit)
+        self.progressDlg = None
         self.suppliers = shops
         self.model = ArticleListModel()
 
@@ -140,18 +149,6 @@ class MainWindow(QMainWindow):
                     a.visible = item.checkState()
         self.model.refresh()
 
-    def finished(self):
-        self.progressDlg.close()
-        self.model.beginResetModel()
-        self.model.articles = self.worker.articles
-        self.filter_checked_suppliers()
-        self.model.refresh()
-        self.model.endResetModel()
-
-        self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
-        self.centralWidget().resultTable.resizeColumnsToContents()
-        self.centralWidget().resultTable.resizeRowsToContents()
-
     def open_url(self, event):
         index = self.centralWidget().resultTable.currentIndex()
         if index.isValid():
@@ -178,15 +175,31 @@ class MainWindow(QMainWindow):
         def _get_suppliers():
             for row in range(self.suppliersListWidget.count()):
                 item = self.suppliersListWidget.item(row)
-                yield item.data(Qt.UserRole)
+                if item.checkState() == Qt.Checked:
+                    yield item.data(Qt.UserRole)
 
         self.worker.shops = list(_get_suppliers())
         self.worker.search_term = self.centralWidget().searchLineEdit.text()
+        self.progressDlg = QProgressDialog(self)
+        self.progressDlg.canceled.connect(self.worker.quit)
         self.progressDlg.setMinimum(0)
         self.progressDlg.setMaximum(len(self.worker.shops))
         self.progressDlg.setModal(True)
         self.progressDlg.show()
         self.worker.start()
+
+    def search_finished(self):
+        self.progressDlg.close()
+
+        self.model.beginResetModel()
+        self.model.articles = self.worker.articles
+        self.filter_checked_suppliers()
+        self.model.refresh()
+        self.model.endResetModel()
+
+        self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
+        self.centralWidget().resultTable.resizeColumnsToContents()
+        self.centralWidget().resultTable.resizeRowsToContents()
 
     def suppliers_changed(self):
         for row in range(self.suppliersListWidget.count()):
@@ -198,7 +211,9 @@ class MainWindow(QMainWindow):
         self.model.refresh()
 
 
-def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
+def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()],
+        title="Articlefinder"):
+
     app = QApplication(sys.argv)
     QCoreApplication.setApplicationName("Bike Finder")
     QCoreApplication.setApplicationVersion("1.0.1")
@@ -208,9 +223,10 @@ def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()]):
     translator.load(tf)
     app.installTranslator(translator)
     w = MainWindow(shops)
+    w.setWindowTitle(title)
     w.show()
     app.exec_()
 
 
-if __name__== "__main__":
+if __name__ == "__main__":
     run()
