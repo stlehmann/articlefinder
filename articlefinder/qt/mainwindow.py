@@ -10,7 +10,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, \
     QGridLayout, QPushButton, QTableView, QWidget, QListWidget, \
     QSplitter, QListWidgetItem, QProgressDialog, QToolBox, QDockWidget, \
     QMainWindow
-from docutils.nodes import transition
 from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
 from articlefinder.qt.widgets.CentralWidget import CentralWidget
 from articlefinder.qt.widgets.SuppliersDockWidget import SuppliersDockWidget

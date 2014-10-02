@@ -29,7 +29,7 @@ class Conrad(AbstractShop):
             a.name = name("a")[0].text
             a.price = extract_float(div("span", class_="current-price")[0].text)
             a.articlenr = div("div", class_="bestnr")[0].strong.text
-            a.url = self.url + name("a")[0].get('href')
+            a.url = name("a")[0].get('href')
             a.image_url = div.img.get("src")
             a.shop = self
             yield a
