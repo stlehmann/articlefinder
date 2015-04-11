@@ -1,5 +1,3 @@
-__author__ = 'lehmann'
-
 import operator
 
 
@@ -16,9 +14,11 @@ class Finder(object):
         """
         def _find():
             for shop in self.shops:
-                for a in shop.find_articles(search_term):
+                for a in shop.find(search_term):
                     yield a
         return list(_find())
+
+
 
     @staticmethod
     def sort(articles, attribute="price"):

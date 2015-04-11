@@ -2,9 +2,9 @@ import urllib.parse
 import urllib.request
 import re
 import bs4
-from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.article import Article
-from articlefinder.utilities import extract_float
+from articlefinder.core.shop import Shop
+from articlefinder.core.article import Article
+from articlefinder.core.utilities import extract_float
 
 __author__ = 'stefanlehmann'
 
@@ -14,7 +14,7 @@ def _get_productid(link):
         return re.findall("product=(.*);?", link)[0]
 
 
-class Bike24(AbstractShop):
+class Bike24(Shop):
     def __init__(self):
         super(Bike24, self).__init__()
         self.name = "Bike24"
@@ -25,7 +25,7 @@ class Bike24(AbstractShop):
         search_term = "+".join(search_term.split())
         return "http://www.bike24.net/1.php"
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         data = urllib.parse.urlencode({"content": "13",
                                "navigation": "1",
                                "search": search_term,
@@ -51,5 +51,5 @@ class Bike24(AbstractShop):
 
 if __name__ == "__main__":
     shop = Bike24()
-    for a in shop.find_articles("Stütze"):
+    for a in shop.find("Stütze"):
         print((a.name, a.url))

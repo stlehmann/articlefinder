@@ -1,3 +1,3 @@
 __author__ = 'stefanlehmann'
 
-from articlefinder.shops.abstractshop import AbstractShop
+from articlefinder.core.shop import Shop

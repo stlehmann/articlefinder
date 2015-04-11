@@ -3,23 +3,22 @@
 import os
 import sys
 import webbrowser
+
 from PyQt5.Qt import Qt
-from PyQt5.QtCore import QTranslator, QThread, pyqtSignal, QCoreApplication, \
+from PyQt5.QtCore import QTranslator, QCoreApplication, \
     QSettings
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, \
-    QGridLayout, QPushButton, QTableView, QWidget, QListWidget, \
-    QSplitter, QListWidgetItem, QProgressDialog, QToolBox, QDockWidget, \
+from PyQt5.QtWidgets import QApplication, QListWidgetItem, QProgressDialog, \
     QMainWindow
-from docutils.nodes import transition
-from articlefinder.qt.articlelist_model import ArticleListModel, PRICE, NAME
-from articlefinder.qt.widgets.CentralWidget import CentralWidget
-from articlefinder.qt.widgets.SuppliersDockWidget import SuppliersDockWidget
+
+from articlefinder.gui.articlelist_model import ArticleListModel, PRICE, NAME
+from articlefinder.gui.widgets.CentralWidget import CentralWidget
+from articlefinder.gui.widgets.SuppliersDockWidget import SuppliersDockWidget
+from articlefinder.gui.workerthread import WorkerThread
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
 from articlefinder.shops.bike.mtb_news import MTBNews
 
-__author__ = 'stefanlehmann'
 
 WINDOW_STATE_SETTING = "WindowState"
 WINDOW_GEOMETRY_SETTING = "WindowGeometry"
@@ -27,96 +26,48 @@ HORIZONTAL_HEADER_SETTING = "HorizontalHeader"
 VERTICAL_HEADER_SETTING = "VerticalHeader"
 
 
-class WorkerThread(QThread):
-    """
-    Thread for doing all the work:
-        * finding the articles in the shops
-        * downloading images
-
-    """
-    progress = pyqtSignal(int, int, str, name="progress")
-
-    def __init__(self):
-        super(WorkerThread, self).__init__()
-        self._cancel = False
-        self.shops = []
-        self.search_term = ""
-        self.articles = []
-
-    def run(self):
-        def _find():
-            for i, shop in enumerate(self.shops):
-                self.progress.emit(i, len(self.shops), "Suche Artikel bei %s" % shop.name)
-                for a in shop.find_articles(self.search_term):
-                    yield a
-                    if self._cancel:
-                        return
-
-        self._cancel = False
-        self.articles = list(_find())
-        self._cancel = False
-        for i, article in enumerate(self.articles):
-            if self._cancel:
-                return
-            self.progress.emit(i, len(self.articles), "Bilder herunterladen")
-            article.download_image()
-
-    def quit(self):
-        self._cancel = True
-
-
 class MainWindow(QMainWindow):
     def __init__(self, shops, parent=None):
         super().__init__(parent)
 
+        # Worker Thread for Download
         self.worker = WorkerThread()
         self.worker.finished.connect(self.search_finished)
         self.worker.progress.connect(self.progress)
-        self.progressDlg = None
-        self.suppliers = shops
-        self.model = ArticleListModel()
 
+        # Progress Dialog
+        self.progressDlg = None
+
+        # Central Widget with Result Table
+        self.model = ArticleListModel()
         self.setCentralWidget(CentralWidget())
         self.table = self.centralWidget().resultTable
         self.table.setModel(self.model)
         self.model.table = self.centralWidget().resultTable
+
+        # Signals
         self.centralWidget().searchLineEdit.returnPressed.connect(self.search)
         self.centralWidget().resultTable.clicked.connect(self.open_url)
         self.centralWidget().searchButton.pressed.connect(self.search)
         self.centralWidget().resultTable.mouseMoveEvent = self.resultTable_mouseMove
 
-        #supplier list
+        # Supplier list
+        self.suppliers = shops
         self.suppliersDockWidget = SuppliersDockWidget()
         self.suppliersListWidget = self.suppliersDockWidget.suppliersListWidget
         self.suppliersListWidget.itemChanged.connect(self.filter_checked_suppliers)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.suppliersDockWidget)
-
         self.fill_supplier_list()
 
-        try:
-            self.restoreState(QSettings().value(WINDOW_STATE_SETTING))
-            self.restoreGeometry(QSettings().value(WINDOW_GEOMETRY_SETTING))
-            self.table.horizontalHeader().restoreState(
-                QSettings().value(HORIZONTAL_HEADER_SETTING)
-            )
-            self.table.verticalHeader().restoreState(
-                QSettings().value(VERTICAL_HEADER_SETTING)
-            )
-        except (AttributeError, TypeError):
-            self.resize(600, 800)
+        self._init_menus()
+        self.load_settings()
+
+    def _init_menus(self):
+        self.viewMenu = self.menuBar().addMenu(self.tr('View'))
+        self.viewMenu.addAction(self.suppliersDockWidget.toggleViewAction())
 
     def closeEvent(self, event):
-        QSettings().setValue(WINDOW_STATE_SETTING, self.saveState())
-        QSettings().setValue(WINDOW_GEOMETRY_SETTING, self.saveGeometry())
-        QSettings().setValue(
-            HORIZONTAL_HEADER_SETTING,
-            self.table.horizontalHeader().saveState()
-        )
-        QSettings().setValue(
-            VERTICAL_HEADER_SETTING,
-            self.table.verticalHeader().saveState()
-        )
-
+        self.save_settings()
         QMainWindow.closeEvent(self, event)
 
     def fill_supplier_list(self):
@@ -133,9 +84,22 @@ class MainWindow(QMainWindow):
             item = self.suppliersListWidget.item(row)
             shop = item.data(Qt.UserRole)
             for a in self.model.articles:
-                if a.shopname == shop.name:
+                if a.shop.name == shop.name:
                     a.visible = item.checkState()
         self.model.refresh()
+
+    def load_settings(self):
+        try:
+            self.restoreState(QSettings().value(WINDOW_STATE_SETTING))
+            self.restoreGeometry(QSettings().value(WINDOW_GEOMETRY_SETTING))
+            self.table.horizontalHeader().restoreState(
+                QSettings().value(HORIZONTAL_HEADER_SETTING)
+            )
+            self.table.verticalHeader().restoreState(
+                QSettings().value(VERTICAL_HEADER_SETTING)
+            )
+        except (AttributeError, TypeError):
+            self.resize(600, 800)
 
     def open_url(self, event):
         index = self.centralWidget().resultTable.currentIndex()
@@ -158,6 +122,18 @@ class MainWindow(QMainWindow):
             self.centralWidget().resultTable.setCursor(Qt.PointingHandCursor)
         else:
             self.centralWidget().resultTable.unsetCursor()
+
+    def save_settings(self):
+        QSettings().setValue(WINDOW_STATE_SETTING, self.saveState())
+        QSettings().setValue(WINDOW_GEOMETRY_SETTING, self.saveGeometry())
+        QSettings().setValue(
+            HORIZONTAL_HEADER_SETTING,
+            self.table.horizontalHeader().saveState()
+        )
+        QSettings().setValue(
+            VERTICAL_HEADER_SETTING,
+            self.table.verticalHeader().saveState()
+        )
 
     def search(self):
         def _get_suppliers():

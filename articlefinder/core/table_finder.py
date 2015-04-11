@@ -70,7 +70,7 @@ class TableFinder(Finder):
             print ("-----------------------")
             for shop in self.shops:
                 print((shop.name + "..."), end=' ')
-                for a in shop.find_articles(search_term):
+                for a in shop.find(search_term):
                     yield a
                 print ("Done")
             print ("-----------------------")

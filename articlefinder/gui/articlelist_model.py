@@ -43,7 +43,7 @@ class ArticleListModel(QAbstractTableModel):
             if column == PRICE:
                 return "%0.2f€" % article.price
             if column == SHOP:
-                return article.shopname
+                return article.shop.name
 
         if role == Qt.TextAlignmentRole:
             if column == IMAGE:

@@ -5,6 +5,6 @@ from articlefinder.shops.electro.rsonline import RSOnline
 
 __author__ = 'lehmann'
 
-from articlefinder.qt import mainwindow
+from articlefinder.gui import mainwindow
 
 mainwindow.run([Conrad(), RSOnline(), Reichelt()], title="Electro Finder")

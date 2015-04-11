@@ -1,15 +1,15 @@
 import bs4
 import urllib.parse
 import urllib.request
-from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.article import Article
-from articlefinder.utilities import extract_float
+from articlefinder.core.shop import Shop
+from articlefinder.core.article import Article
+from articlefinder.core.utilities import extract_float
 
 
 __author__ = 'lehmann'
 
 
-class CNCBikes(AbstractShop):
+class CNCBikes(Shop):
     def __init__(self):
         super(CNCBikes, self).__init__()
         self.name = "CNC Bikes"
@@ -37,11 +37,11 @@ class CNCBikes(AbstractShop):
             a.image_url = self.url + "/" + row.img.get("src")
             yield a
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         return self._search(search_term)
 
 
 if __name__ == "__main__":
     shop = CNCBikes()
-    for a in shop.find_articles("Sattelstütze"):
+    for a in shop.find("Sattelstütze"):
         print((a.name, a.price, a.url))
