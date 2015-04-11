@@ -20,7 +20,8 @@ class WorkerThread(QThread):
     def run(self):
         def _find():
             for i, shop in enumerate(self.shops):
-                self.progress.emit(i, len(self.shops), "Suche Artikel bei %s" % shop.name)
+                self.progress.emit(i, len(self.shops),
+                                   "Suche Artikel bei %s" % shop.name)
                 for a in shop.find(self.search_term):
                     yield a
                     if self._cancel:

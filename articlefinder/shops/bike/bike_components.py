@@ -1,13 +1,11 @@
 import urllib, urllib.parse
 import bs4
-from articlefinder.article import Article
-from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.utilities import extract_float
-
-__author__ = 'stefanlehmann'
+from articlefinder.core.article import Article
+from articlefinder.core.shop import Shop
+from articlefinder.core.utilities import extract_float
 
 
-class BikeComponents(AbstractShop):
+class BikeComponents(Shop):
     def __init__(self):
         super().__init__()
         self.name = "Bike Components"
@@ -27,6 +25,7 @@ class BikeComponents(AbstractShop):
             a.image_url = li.img["src"] if li.img else None
             a.shop = self
             yield a
+
 
 if __name__=="__main__":
     shop = BikeComponents()

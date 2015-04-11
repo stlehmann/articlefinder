@@ -1,12 +1,8 @@
 import bs4
-import urllib.parse
-import urllib.request
+import urllib.parse, urllib.request
 from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
-
-
-__author__ = 'lehmann'
 
 
 class CNCBikes(Shop):

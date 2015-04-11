@@ -6,8 +6,6 @@ from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 
-__author__ = 'stefanlehmann'
-
 
 def _get_productid(link):
     if link:

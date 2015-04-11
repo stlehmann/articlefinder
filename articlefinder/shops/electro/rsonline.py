@@ -1,15 +1,11 @@
-#-*- coding: utf-8 -*-
-from http.client import HTTPResponse
-import urllib.request, urllib.parse, urllib.error
 import bs4
-from articlefinder.article import Article
-from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.utilities import extract_float
+import urllib.request, urllib.parse, urllib.error
+from articlefinder.core.article import Article
+from articlefinder.core.shop import Shop
+from articlefinder.core.utilities import extract_float
 
-__author__ = 'lehmann'
 
-
-class RSOnline(AbstractShop):
+class RSOnline(Shop):
     def __init__(self):
         super(RSOnline, self).__init__()
         self.name = "RS Online"

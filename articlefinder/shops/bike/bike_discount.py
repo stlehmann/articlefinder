@@ -1,12 +1,8 @@
-#-*- coding: utf-8 -*-
-
-import urllib.request, urllib.parse, urllib.error
 import bs4
+import urllib.request, urllib.parse, urllib.error
 from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
-
-__author__ = 'lehmann'
 
 
 class BikeDiscount(Shop):

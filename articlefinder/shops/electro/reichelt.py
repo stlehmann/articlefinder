@@ -1,13 +1,11 @@
-import urllib
 import bs4
-from articlefinder.article import Article
-from articlefinder.shops.abstractshop import AbstractShop
-from articlefinder.utilities import extract_float
+import urllib
+from articlefinder.core.article import Article
+from articlefinder.core.shop import Shop
+from articlefinder.core.utilities import extract_float
 
-__author__ = 'Lehmann'
 
-
-class Reichelt(AbstractShop):
+class Reichelt(Shop):
     def __init__(self):
         self.name = "Reichelt"
         self.url = "http://www.reichelt.de"
@@ -30,6 +28,7 @@ class Reichelt(AbstractShop):
             a.image_url = div("div", class_="al_artlogo")[0].img.get("data-original")
             a.shop = self
             yield a
+
 
 if __name__ == "__main__":
     reichelt = Reichelt()

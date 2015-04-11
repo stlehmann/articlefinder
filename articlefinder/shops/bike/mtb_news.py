@@ -1,12 +1,9 @@
+import bs4
 from urllib.error import HTTPError
 import urllib.request, urllib.parse, urllib.error
-import urllib.request, urllib.error, urllib.parse
-import bs4
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 from articlefinder.core.shop import Shop
-
-__author__ = 'lehmann'
 
 
 class MTBNews(Shop):

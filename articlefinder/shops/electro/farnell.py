@@ -1,11 +1,9 @@
-import urllib
 import bs4
-from articlefinder.shops.abstractshop import AbstractShop
+import urllib
+from articlefinder.core.shop import Shop
 
-__author__ = 'lehmann'
 
-
-class Farnell(AbstractShop):
+class Farnell(Shop):
     def __init__(self):
         super().__init__()
         self.name = "Farnell"
