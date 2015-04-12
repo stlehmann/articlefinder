@@ -10,9 +10,9 @@ from PyQt5.QtCore import QTranslator, QCoreApplication, \
 from PyQt5.QtWidgets import QApplication, QListWidgetItem, QProgressDialog, \
     QMainWindow
 
-from articlefinder.gui.articlelist_model import ArticleListModel, PRICE, NAME
-from articlefinder.gui.widgets.CentralWidget import CentralWidget
-from articlefinder.gui.widgets.SuppliersDockWidget import SuppliersDockWidget
+from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME
+from articlefinder.gui.centralwidget import CentralWidget
+from articlefinder.gui.shoplist import ShoplistDockWidget
 from articlefinder.gui.workerthread import WorkerThread
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
@@ -53,10 +53,10 @@ class MainWindow(QMainWindow):
 
         # Supplier list
         self.suppliers = shops
-        self.suppliersDockWidget = SuppliersDockWidget()
-        self.suppliersListWidget = self.suppliersDockWidget.suppliersListWidget
-        self.suppliersListWidget.itemChanged.connect(self.filter_checked_suppliers)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.suppliersDockWidget)
+        self.shoplistDockWidget = ShoplistDockWidget()
+        self.shoplistWidget = self.shoplistDockWidget.widget()
+        # self.shoplistWidget.itemChanged.connect(self.filter_checked_suppliers)
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget)
         self.fill_supplier_list()
 
         self._init_menus()
@@ -64,24 +64,24 @@ class MainWindow(QMainWindow):
 
     def _init_menus(self):
         self.viewMenu = self.menuBar().addMenu(self.tr('View'))
-        self.viewMenu.addAction(self.suppliersDockWidget.toggleViewAction())
+        self.viewMenu.addAction(self.shoplistDockWidget.toggleViewAction())
 
     def closeEvent(self, event):
         self.save_settings()
         QMainWindow.closeEvent(self, event)
 
     def fill_supplier_list(self):
-        self.suppliersListWidget.clear()
+        self.shoplistWidget.clear()
         for s in self.suppliers:
             item = QListWidgetItem(s.name)
             item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
             item.setCheckState(Qt.Checked)
             item.setData(Qt.UserRole, s)
-            self.suppliersListWidget.addItem(item)
+            self.shoplistWidget.addItem(item)
 
     def filter_checked_suppliers(self):
-        for row in range(self.suppliersListWidget.count()):
-            item = self.suppliersListWidget.item(row)
+        for row in range(self.shoplistWidget.count()):
+            item = self.shoplistWidget.item(row)
             shop = item.data(Qt.UserRole)
             for a in self.model.articles:
                 if a.shop.name == shop.name:
@@ -137,8 +137,8 @@ class MainWindow(QMainWindow):
 
     def search(self):
         def _get_suppliers():
-            for row in range(self.suppliersListWidget.count()):
-                item = self.suppliersListWidget.item(row)
+            for row in range(self.shoplistWidget.count()):
+                item = self.shoplistWidget.item(row)
                 if item.checkState() == Qt.Checked:
                     yield item.data(Qt.UserRole)
 
@@ -164,8 +164,8 @@ class MainWindow(QMainWindow):
         self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
 
     def suppliers_changed(self):
-        for row in range(self.suppliersListWidget.count()):
-            item = self.suppliersListWidget.item(row)
+        for row in range(self.shoplistWidget.count()):
+            item = self.shoplistWidget.item(row)
             shop = item.data(Qt.UserRole)
             for a in self.model.articles:
                 if a.shopname == shop.name:

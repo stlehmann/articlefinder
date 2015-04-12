@@ -1,10 +1,13 @@
-import urllib.parse
-import urllib.request
-import re
+import logging
 import bs4
+import re
+import urllib.parse, urllib.request
 from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
+
+
+logger = logging.getLogger('articlefinder.shops.bike24')
 
 
 def _get_productid(link):
@@ -24,27 +27,32 @@ class Bike24(Shop):
         return "http://www.bike24.net/1.php"
 
     def find(self, search_term):
+        # Create URL
         data = urllib.parse.urlencode({"content": "13",
                                "navigation": "1",
                                "search": search_term,
                                "pitems": "50"}, encoding="iso8859-1")
         url = self.url + "/1.php" + "?" + data
-        html = urllib.request.urlopen(url)
-        soup = bs4.BeautifulSoup(html)
-        tbl = soup('table', class_='simpletablefull')
-        if not len(tbl):
-            return
 
-        headers = tbl[0]("h2")
-        for h in headers:
-            row = h.parent.parent
+        # Make HTML request
+        logger.info("Open url '%s'" % url)
+        html = urllib.request.urlopen(url)
+        logger.info('url request successful')
+
+        # Create BeautifulSoup object
+        soup = bs4.BeautifulSoup(html)
+
+        # Get all items
+        listitems = soup.find_all('li', ('hit first', 'hit'))
+        logger.info("Found %i items", len(listitems))
+        for li in listitems:
             a = Article()
             a.shop = self
-            a.name = h("b")[0].text
-            a.url = self.url + "/" + row("a")[0].get("href")
-            a.price = extract_float(row("td")[2].text)
+            a.name = li('a')[1].text
+            a.url = self.url + "/" + li('a')[1].get("href")
+            a.price = extract_float(li('a', 'price')[0].text)
             a.articlenr = _get_productid(a.url)
-            a.image_url = self.url + "/" + row.img.get("src")
+            a.image_url = self.url + "/" + li('img')[0].get('src')
             yield a
 
 if __name__ == "__main__":

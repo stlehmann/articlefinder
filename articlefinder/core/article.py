@@ -23,7 +23,10 @@ class Article:
         self.shop = None
         self.units = 1
         self.properties = {}
-        self.notes = ""
+        self.description = ""
         self.image_url = ""
         self.image = None
 
+    def __repr__(self):
+        return "<Article object name=%s, brand=%s, shop=%s, price=%.2f" % \
+               (self.name, self.brand, self.shop.name, self.price)

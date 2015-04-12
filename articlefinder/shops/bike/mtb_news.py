@@ -1,9 +1,14 @@
+import logging
 import bs4
 from urllib.error import HTTPError
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse, urllib.error
+from urllib.request import Request, urlopen
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 from articlefinder.core.shop import Shop
+
+
+logger = logging.getLogger('articlefinder.shop.mtbnews')
 
 
 class MTBNews(Shop):
@@ -13,10 +18,16 @@ class MTBNews(Shop):
         self.url = "http://bikemarkt.mtb-news.de"
 
     def find(self, search_term):
+        # Create URL
         data = urllib.parse.urlencode({"q_ft": search_term})
         url = "http://bikemarkt.mtb-news.de/search/index?" + data
+        logger.info("Open url  '%s'" % url)
+
         try:
-            html = urllib.request.urlopen(url)
+            # Make HTML Request
+            req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            html = urlopen(req).read()
+            logger.info("url request successful")
 
             soup = bs4.BeautifulSoup(html)
             for tr in soup("tr"):
@@ -26,10 +37,10 @@ class MTBNews(Shop):
                     a.name = tr("h3")[0].a.text
                     a.price = extract_float(tr("td", class_="articlePrice")[0].text)
                     a.url = self.url + tr("h3")[0]("a")[0]["href"]
-                    a.image_url = tr.img.get("src")
+                    a.image_url = tr('img')[0].get("src")
                     yield a
         except HTTPError as e:
-            print(e)
+            logger.error(e)
 
 
 if __name__ == "__main__":

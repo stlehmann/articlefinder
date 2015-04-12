@@ -1,8 +1,12 @@
 import bs4
 import urllib.parse, urllib.request
+import logging
 from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
+
+
+logger = logging.getLogger("articlefinder.shop.cncbikes")
 
 
 class CNCBikes(Shop):
@@ -17,11 +21,15 @@ class CNCBikes(Shop):
     def _search(self, search_term):
         data = urllib.parse.urlencode({"keywords": search_term, "title": "1"}, encoding="iso8859-1")
         url = "http://www.cnc-bike.de/advanced_search_result.php?" + data
+        logger.info("Open url '%s'" % url)
+
         html = urllib.request.urlopen(url)
+        logger.info("url request successful")
         soup = bs4.BeautifulSoup(html)
 
         tbl = soup("table", class_="productListing")[0]
         rows = tbl("tr")[1:]
+        logger.info("Found %i items" % len(rows))
         for row in rows:
             a = Article()
             a.shop = self

@@ -1,5 +1,9 @@
 import re
-__author__ = 'lehmann'
+import time
+import logging
+
+
+logger = logging.getLogger("articlefinder.core.utilities")
 
 
 def abstractmethod(method):
@@ -55,3 +59,12 @@ def extract_float(str_):
     res = res.replace(",", ".")
 
     return float(res)
+
+def timeit(func):
+    def wrapper(*args, **kwargs):
+        t1 = time.clock()
+        res = func(*args, **kwargs)
+        diff = time.clock() - t1
+        print("%s: %.3f" % (func.__name__, diff))
+        return res, func.__name__
+    return wrapper

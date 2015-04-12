@@ -34,11 +34,10 @@ class CentralWidget(QWidget):
         self.layout().addWidget(self.searchLineEdit, 0, 1)
         self.layout().addWidget(self.searchButton, 0, 2)
         self.layout().addWidget(self.resultTable, 1, 0, 1, 3)
+
     def row_resized(self, index, old_size, new_size):
         for i in range(self.resultTable.verticalHeader().count()):
             self.resultTable.setRowHeight(i, new_size)
-
-
 
 
 if __name__ == "__main__":

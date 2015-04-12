@@ -1,5 +1,6 @@
 import socket
 import urllib.request
+from urllib.request import Request, urlopen
 from PyQt5.QtGui import QPixmap
 
 class Shop:
@@ -36,7 +37,8 @@ class Shop:
 
         """
         try:
-            response = urllib.request.urlopen(image_url, timeout=2).read()
+            req = Request(image_url, headers={'User-Agent': 'Mozilla/5.0'})
+            response = urlopen(req).read()
             image = QPixmap()
             image.loadFromData(response)
             return image
