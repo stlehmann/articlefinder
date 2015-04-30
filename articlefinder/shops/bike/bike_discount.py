@@ -5,6 +5,7 @@ from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 
+name = "Bike Discount"
 
 logger = logging.getLogger('articlefinder.shop.bikediscount')
 
@@ -14,7 +15,7 @@ class BikeDiscount(Shop):
 
     def __init__(self):
         super(BikeDiscount, self).__init__()
-        self.name = "Bike Discount"
+        self.name = name
         self.url = "http://www.bike-discount.de"
 
     def find(self, search_term):
@@ -40,6 +41,10 @@ class BikeDiscount(Shop):
             a.image_url = self.url + '/' + item('img')[0].get('src')
             a.description = item('div', 'description')[0].text
             yield a
+
+
+def create_shop():
+    return BikeDiscount()
 
 
 if __name__=="__main__":

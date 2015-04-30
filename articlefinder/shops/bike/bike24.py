@@ -6,6 +6,8 @@ from articlefinder.core.shop import Shop
 from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 
+name = "Bike24"
+
 
 logger = logging.getLogger('articlefinder.shops.bike24')
 
@@ -18,7 +20,7 @@ def _get_productid(link):
 class Bike24(Shop):
     def __init__(self):
         super(Bike24, self).__init__()
-        self.name = "Bike24"
+        self.name = name
         self.url = "http://www.bike24.net"
 
     def _get_search_url(self, search_term):

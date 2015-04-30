@@ -4,7 +4,8 @@ from articlefinder.core.article import Article
 from articlefinder.core.shop import Shop
 from articlefinder.core.utilities import extract_float
 
-__author__ = 'lehmann'
+
+name = "Conrad"
 
 
 class Conrad(Shop):
@@ -13,7 +14,7 @@ class Conrad(Shop):
     """
     def __init__(self):
         super(Conrad, self).__init__()
-        self.name = "Conrad"
+        self.name = name
         self.url = "http://www.conrad.de"
 
     def find_articles(self, search_term):
@@ -33,6 +34,11 @@ class Conrad(Shop):
             a.image_url = div.img.get("src")
             a.shop = self
             yield a
+
+
+def create_shop():
+    return Conrad()
+
 
 if __name__ == "__main__":
     c = Conrad()

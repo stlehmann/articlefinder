@@ -5,10 +5,13 @@ from articlefinder.core.shop import Shop
 from articlefinder.core.utilities import extract_float
 
 
+name = "RS Online"
+
+
 class RSOnline(Shop):
     def __init__(self):
         super(RSOnline, self).__init__()
-        self.name = "RS Online"
+        self.name = name
         self.url = "http://de.rs-online.com"
 
     def find_articles(self, search_term):
@@ -44,6 +47,10 @@ class RSOnline(Shop):
                 a.image_url = row("img")[0]["src"]
                 a.shop = self
                 yield a
+
+
+def create_shop():
+    return RSOnline()
 
 if __name__ == "__main__":
     c = RSOnline()

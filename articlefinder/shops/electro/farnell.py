@@ -3,10 +3,13 @@ import urllib
 from articlefinder.core.shop import Shop
 
 
+name = "Farnell"
+
+
 class Farnell(Shop):
     def __init__(self):
         super().__init__()
-        self.name = "Farnell"
+        self.name = name
         self.url = "http://de.farnell.com"
 
     def find_articles(self, search_term):
@@ -19,6 +22,10 @@ class Farnell(Shop):
         print(url)
         html = urllib.request.urlopen(url)
         soup = bs4.BeautifulSoup(html)
+
+
+def create_shop():
+    return Farnell()
 
 if __name__ == "__main__":
     shop = Farnell()

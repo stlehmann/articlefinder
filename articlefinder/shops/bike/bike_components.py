@@ -4,11 +4,12 @@ from articlefinder.core.article import Article
 from articlefinder.core.shop import Shop
 from articlefinder.core.utilities import extract_float
 
+name = "Bike Components"
 
 class BikeComponents(Shop):
     def __init__(self):
         super().__init__()
-        self.name = "Bike Components"
+        self.name = name
         self.url = "http://www.bike-components.de"
 
     def find_articles(self, search_term):
@@ -25,6 +26,10 @@ class BikeComponents(Shop):
             a.image_url = li.img["src"] if li.img else None
             a.shop = self
             yield a
+
+
+def create_shop():
+    return BikeComponents()
 
 
 if __name__=="__main__":

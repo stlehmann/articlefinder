@@ -6,13 +6,14 @@ from articlefinder.core.article import Article
 from articlefinder.core.utilities import extract_float
 
 
+name = "CNC Bikes"
 logger = logging.getLogger("articlefinder.shop.cncbikes")
 
 
 class CNCBikes(Shop):
     def __init__(self):
         super(CNCBikes, self).__init__()
-        self.name = "CNC Bikes"
+        self.name = name
         self.url = "http://www.cnc-bike.de"
 
     def _get_search_url(self, search_term):
@@ -43,6 +44,10 @@ class CNCBikes(Shop):
 
     def find(self, search_term):
         return self._search(search_term)
+
+
+def create_shop():
+    return CNCBikes()
 
 
 if __name__ == "__main__":

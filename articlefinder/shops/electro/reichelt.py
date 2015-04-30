@@ -5,9 +5,12 @@ from articlefinder.core.shop import Shop
 from articlefinder.core.utilities import extract_float
 
 
+name = "Reichelt"
+
+
 class Reichelt(Shop):
     def __init__(self):
-        self.name = "Reichelt"
+        self.name = name
         self.url = "http://www.reichelt.de"
 
     def find_articles(self, search_term):
@@ -29,6 +32,9 @@ class Reichelt(Shop):
             a.shop = self
             yield a
 
+
+def create_shop():
+    return Reichelt()
 
 if __name__ == "__main__":
     reichelt = Reichelt()

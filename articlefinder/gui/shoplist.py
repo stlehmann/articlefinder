@@ -20,18 +20,22 @@ logger = logging.getLogger('articlefinder.gui.shoplist')
 def get_modules(pkg_name):
     package = importlib.import_module(pkg_name)
     prefix = package.__name__ + "."
-    for path, module, ispkg in pkgutil.iter_modules(package.__path__, prefix):
-        yield module
+    if hasattr(package, '__path__'):
+        for path, modulename, ispkg in pkgutil.iter_modules(package.__path__, prefix):
+            yield modulename
+
 
 class ModuleItem():
     def __init__(self, modulename):
         self.name = modulename
+
 
 class Node():
     def __init__(self, parent=None):
         self.children = []
         self.item = ''
         self.parent = None
+        self.checked = False
 
     def __len__(self):
         return len(self.children)
@@ -61,48 +65,46 @@ class Node():
         bisect.insort(self.children, (child.order_key(), child))
 
     def order_key(self):
-        return self.item.lower()
+        return self.item.__name__.lower()
+
 
 class Leaf():
     def __init__(self, item, parent=None):
         self.parent = parent
         self.item = item
+        self.checked = False
 
     def __len__(self):
         return 0
 
     def order_key(self):
-        if self.item is None:
-            return ""
-        return self.item
+        return self.item.__name__.lower()
 
 
 class ShoplistModel(QAbstractItemModel):
+    columns = ["shop"]
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.root = self.init_root()
 
     def init_root(self):
-        mainmodule = 'articlefinder.shops'
         def nodes_from_modules(parent):
             for module in get_modules(parent):
-                try:
-                    children = list(nodes_from_modules(module))
-                except AttributeError as e:
-                    logger.error(e)
-                    children = []
+                children = list(nodes_from_modules(module))
 
                 if children:
                     node = Node()
-                    node.item = module
+                    node.item = importlib.import_module(module)
                     for child in children:
                         node.insert_child(child)
                     yield node
                 else:
-                    leaf = Leaf(module)
+                    leaf = Leaf(importlib.import_module(module))
                     yield leaf
 
         root = Node()
+        mainmodule = 'articlefinder.shops'
         for child in nodes_from_modules(mainmodule):
             root.insert_child(child)
         return root
@@ -137,12 +139,62 @@ class ShoplistModel(QAbstractItemModel):
     def data(self, index: QModelIndex, role=None):
         if not index.isValid():
             return
+
         node = self.node_from_index(index)
         item = node.item
+
         if role == Qt.DisplayRole:
             if index.column() == 0:
-                name = item.split('.')[-1]
-                return name
+                if hasattr(item, "name"):
+                    return item.name
+                else:
+                    name = item.__name__.split('.')[-1]
+                    return name
+        elif role == Qt.CheckStateRole:
+            return Qt.Checked if node.checked else Qt.Unchecked
+
+    def setData(self, index: QModelIndex, value, role=Qt.EditRole):
+        if not index.isValid():
+            return 0
+
+        node = self.node_from_index(index)
+        item = node.item
+
+        if role == Qt.CheckStateRole:
+            node.checked = value
+            # if it is a node select the children
+            if isinstance(node, Node):
+                for key, child in node.children:
+                    child.checked = value
+                index0 = self.index(0, 0, index)
+                index1 = self.index(len(node.children), 0, index)
+                self.dataChanged.emit(index0, index1, [Qt.CheckStateRole])
+            elif isinstance(node, Leaf):
+                b = True
+                for key, child in node.parent.children:
+                    if not child.checked:
+                        b = False; break
+                node.parent.checked = b
+                self.dataChanged.emit(index.parent(), index.parent(),
+                    [Qt.CheckStateRole])
+            self.dataChanged.emit(index, index)
+
+
+
+            return True
+
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole:
+            if orientation == Qt.Horizontal:
+                return self.columns[section]
+
+    def flags(self, index: QModelIndex):
+        if not index.isValid():
+            return
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        if index.column() == 0:
+            flags |= Qt.ItemIsUserCheckable
+        return flags
 
     def node_from_index(self, index):
         return index.internalPointer() if index.isValid() else self.root

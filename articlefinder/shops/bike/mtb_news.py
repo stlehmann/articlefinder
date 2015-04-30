@@ -8,6 +8,7 @@ from articlefinder.core.utilities import extract_float
 from articlefinder.core.shop import Shop
 
 
+name = "MTB News"
 logger = logging.getLogger('articlefinder.shop.mtbnews')
 
 
@@ -42,6 +43,9 @@ class MTBNews(Shop):
         except HTTPError as e:
             logger.error(e)
 
+
+def create_shop():
+    return MTBNews()
 
 if __name__ == "__main__":
     shop = MTBNews()
