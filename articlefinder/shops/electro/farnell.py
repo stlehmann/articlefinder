@@ -12,7 +12,7 @@ class Farnell(Shop):
         self.name = name
         self.url = "http://de.farnell.com"
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         data = urllib.parse.urlencode({
             "Ntt": search_term,
             "N": "0",

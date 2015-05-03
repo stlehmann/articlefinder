@@ -1,4 +1,8 @@
+import logging
 from PyQt5.QtCore import QThread, pyqtSignal
+
+
+logger = logging.getLogger("articlefinder.workerthread")
 
 
 class WorkerThread(QThread):
@@ -22,10 +26,17 @@ class WorkerThread(QThread):
             for i, shop in enumerate(self.shops):
                 self.progress.emit(i, len(self.shops),
                                    "Suche Artikel bei %s" % shop.name)
-                for a in shop.find(self.search_term):
-                    yield a
-                    if self._cancel:
-                        return
+                try:
+                    for a in shop.find(self.search_term):
+                        yield a
+                        if self._cancel:
+                            return
+                except NotImplementedError as e:
+                    logger.warning(
+                        "'Find' function not implemented for shop '%s'."
+                        % shop.name)
+                except TypeError as e:
+                    logger.debug("No results in shop '%s'." % shop.name)
 
         self._cancel = False
         self.articles = list(_find())

@@ -13,7 +13,7 @@ class Reichelt(Shop):
         self.name = name
         self.url = "http://www.reichelt.de"
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         data = urllib.parse.urlencode({"SEARCH": search_term})
         url = self.url + r"/index.html?&ACTION=446&LA=&0&" + data
         html = urllib.request.urlopen(url).read()

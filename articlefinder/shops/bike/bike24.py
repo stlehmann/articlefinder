@@ -57,6 +57,11 @@ class Bike24(Shop):
             a.image_url = self.url + "/" + li('img')[0].get('src')
             yield a
 
+
+def create_shop():
+    return Bike24()
+
+
 if __name__ == "__main__":
     shop = Bike24()
     for a in shop.find("Stütze"):

@@ -17,7 +17,7 @@ class Conrad(Shop):
         self.name = name
         self.url = "http://www.conrad.de"
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         data = urllib.parse.urlencode({"search": search_term})
         url = self.url + "/ce/de/Search.html?" + data
         html = urllib.request.urlopen(url)

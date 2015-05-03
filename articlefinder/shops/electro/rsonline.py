@@ -14,7 +14,7 @@ class RSOnline(Shop):
         self.name = name
         self.url = "http://de.rs-online.com"
 
-    def find_articles(self, search_term):
+    def find(self, search_term):
         data = urllib.parse.urlencode({"searchTerm": search_term})
         url = self.url + "/web/c/?" + data
         html = urllib.request.urlopen(url)

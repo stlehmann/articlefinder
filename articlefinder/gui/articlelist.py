@@ -99,7 +99,7 @@ class ArticleListModel(QAbstractTableModel):
 
     def refresh(self):
         self.beginResetModel()
-        self.visible_articles = [a for a in self.articles if a.visible]
+        self.visible_articles = self.articles
         self.sort(self._sort_column, self._sort_order)
         self.endResetModel()
 
@@ -110,7 +110,7 @@ class ArticleListModel(QAbstractTableModel):
         self._sort_column = column
         self._sort_order = order
         self.beginResetModel()
-        attribute = ['name', 'name', 'price', 'shopname']
+        attribute = ['name', 'name', 'price', 'shop.name']
         self.visible_articles = sorted(self.visible_articles,
                                key=operator.attrgetter(attribute[column]),
                                reverse=order == Qt.DescendingOrder)

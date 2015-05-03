@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QApplication, QListWidgetItem, QProgressDialog, \
 
 from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME
 from articlefinder.gui.centralwidget import CentralWidget
+from articlefinder.gui.progressdialog import ProgressDialog
 from articlefinder.gui.shoplist import ShoplistDockWidget
 from articlefinder.gui.workerthread import WorkerThread
 from articlefinder.shops.bike.bike24 import Bike24
@@ -30,15 +31,7 @@ class MainWindow(QMainWindow):
     def __init__(self, shops, parent=None):
         super().__init__(parent)
 
-        # Worker Thread for Download
-        self.worker = WorkerThread()
-        self.worker.finished.connect(self.search_finished)
-        self.worker.progress.connect(self.progress)
-
-        # Progress Dialog
-        self.progressDlg = None
-
-        # Central Widget with Result Table
+       # Central Widget with Result Table
         self.model = ArticleListModel()
         self.setCentralWidget(CentralWidget())
         self.table = self.centralWidget().resultTable
@@ -57,7 +50,6 @@ class MainWindow(QMainWindow):
         self.shoplistWidget = self.shoplistDockWidget.widget()
         # self.shoplistWidget.itemChanged.connect(self.filter_checked_suppliers)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget)
-        self.fill_supplier_list()
 
         self._init_menus()
         self.load_settings()
@@ -69,15 +61,6 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.save_settings()
         QMainWindow.closeEvent(self, event)
-
-    def fill_supplier_list(self):
-        self.shoplistWidget.clear()
-        for s in self.suppliers:
-            item = QListWidgetItem(s.name)
-            item.setFlags(item.flags() | Qt.ItemIsUserCheckable)
-            item.setCheckState(Qt.Checked)
-            item.setData(Qt.UserRole, s)
-            self.shoplistWidget.addItem(item)
 
     def filter_checked_suppliers(self):
         for row in range(self.shoplistWidget.count()):
@@ -136,31 +119,22 @@ class MainWindow(QMainWindow):
         )
 
     def search(self):
+
         def _get_suppliers():
             for row in range(self.shoplistWidget.count()):
                 item = self.shoplistWidget.item(row)
                 if item.checkState() == Qt.Checked:
                     yield item.data(Qt.UserRole)
 
-        self.worker.shops = list(_get_suppliers())
-        self.worker.search_term = self.centralWidget().searchLineEdit.text()
-        self.progressDlg = QProgressDialog(self)
-        self.progressDlg.canceled.connect(self.worker.quit)
-        self.progressDlg.setMinimum(0)
-        self.progressDlg.setMaximum(len(self.worker.shops))
-        self.progressDlg.setModal(True)
-        self.progressDlg.show()
-        self.worker.start()
-
-    def search_finished(self):
-        self.progressDlg.close()
+        progressDlg = ProgressDialog(self)
+        progressDlg.shops = self.shoplistWidget.get_selected_shops()
+        progressDlg.run_search(self.centralWidget().searchLineEdit.text())
+        progressDlg.exec_()
 
         self.model.beginResetModel()
-        self.model.articles = self.worker.articles
-        self.filter_checked_suppliers()
+        self.model.articles = progressDlg.articles
         self.model.refresh()
         self.model.endResetModel()
-
         self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
 
     def suppliers_changed(self):

@@ -3,13 +3,12 @@ Supply a List of all available Shops.
 
 """
 import logging
-import articlefinder.core.logger
 import bisect
 import importlib
 import pkgutil
 from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt
 from PyQt5.QtWidgets import QDockWidget, QListWidget, QWidget, QTreeView, \
-    QVBoxLayout, QApplication
+    QVBoxLayout, QApplication, QPushButton
 import sys
 
 
@@ -213,6 +212,46 @@ class ShoplistWidget(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.treeview)
         self.setLayout(layout)
+
+    def get_shops(self):
+        """
+        List all shops.
+
+        """
+        def _iterate_items(parent):
+            """
+            Iterate over all shops and yield them.
+
+            """
+            for key, child in parent.children:
+                if isinstance(child, Leaf):
+                    yield child.item.create_shop()
+                elif isinstance(child, Node):
+                    for child in _iterate_items(child):
+                        yield child
+
+        root = self.model.root
+        return list(_iterate_items(root))
+
+    def get_selected_shops(self):
+        """
+        Get all shops that are selected.
+
+        """
+        def _find_selected_items(parent):
+            """
+            Iterate over all shops and yield the selected ones.
+
+            """
+            for key, child in parent.children:
+                if isinstance(child, Leaf) and child.checked:
+                    yield child.item.create_shop()
+                elif isinstance(child, Node):
+                    for child in _find_selected_items(child):
+                        yield child
+
+        root = self.model.root
+        return list(_find_selected_items(root))
 
 
 class ShoplistDockWidget(QDockWidget):
