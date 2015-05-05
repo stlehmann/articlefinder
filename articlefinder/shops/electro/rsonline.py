@@ -38,9 +38,9 @@ class RSOnline(Shop):
             for row in tbl:
                 link = row("a", class_="primarySearchLink")[0]
                 a = Article()
-                a.name = link.text
+                a.name = row.a.img["title"]
                 a.url = self.url + link.get("href")
-                a.articlenr = row("a", class_="primarySearchLink")[2].text
+                a.articlenr = row("a", class_="primarySearchLink")[0].text
                 a.brand = row("a", class_="secondarySearchLink")[1].text
                 a.price = extract_float(row("span", class_="price right5")[0].text)
                 a.brand = row("a", class_="secondarySearchLink")[1].text
