@@ -6,7 +6,8 @@ import logging
 import bisect
 import importlib
 import pkgutil
-from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt
+from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt, QSettings
+from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDockWidget, QListWidget, QWidget, QTreeView, \
     QVBoxLayout, QApplication, QPushButton
 import sys
@@ -35,9 +36,14 @@ class Node():
         self.item = ''
         self.parent = None
         self.checked = False
+        self.expanded = False
 
     def __len__(self):
         return len(self.children)
+
+    def __repr__(self):
+        return "<Node object name:'%s', checked:%s" % \
+               (self.item.name, self.checked)
 
     def child_at_row(self, row: int):
         if 0 <= row < len(self.children):
@@ -75,6 +81,10 @@ class Leaf():
 
     def __len__(self):
         return 0
+
+    def __repr__(self):
+        return "<Leaf object shopname:'%s', checked:%s" % \
+               (self.item.name, str(self.checked))
 
     def order_key(self):
         return self.item.__name__.lower()
@@ -160,11 +170,11 @@ class ShoplistModel(QAbstractItemModel):
         item = node.item
 
         if role == Qt.CheckStateRole:
-            node.checked = value
+            node.checked = True if value == Qt.Checked else False
             # if it is a node select the children
             if isinstance(node, Node):
                 for key, child in node.children:
-                    child.checked = value
+                    child.checked = True if value == Qt.Checked else False
                 index0 = self.index(0, 0, index)
                 index1 = self.index(len(node.children), 0, index)
                 self.dataChanged.emit(index0, index1, [Qt.CheckStateRole])
@@ -177,9 +187,6 @@ class ShoplistModel(QAbstractItemModel):
                 self.dataChanged.emit(index.parent(), index.parent(),
                     [Qt.CheckStateRole])
             self.dataChanged.emit(index, index)
-
-
-
             return True
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
@@ -212,6 +219,11 @@ class ShoplistWidget(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.treeview)
         self.setLayout(layout)
+
+        self.load_settings()
+
+    def closeEvent(self, event: QCloseEvent):
+        self.save_settings()
 
     def get_shops(self):
         """
@@ -253,6 +265,67 @@ class ShoplistWidget(QWidget):
         root = self.model.root
         return list(_find_selected_items(root))
 
+    def load_settings(self):
+
+        def iter_itemsbyname(name, parent=QModelIndex()):
+            for row in range(self.model.rowCount(parent)):
+                index = self.model.index(row, 0, parent)
+                if index.data(Qt.DisplayRole) == name:
+                    yield index
+                yield from iter_itemsbyname(name, index)
+
+        settings = QSettings()
+        settings.beginGroup("shoplist")
+
+        # Load expanded items
+        for name in settings.value("expanded", []):
+            items = iter_itemsbyname(name)
+            if items:
+                self.treeview.setExpanded(next(items), True)
+
+        # Load checked items
+        for name in settings.value("checked", []):
+            items = iter_itemsbyname(name, QModelIndex())
+            print(name)
+            if items:
+                self.model.setData(
+                    next(items), Qt.Checked, Qt.CheckStateRole)
+
+        settings.endGroup()
+
+    def save_settings(self):
+        def iter_expandeditems(parent=QModelIndex()):
+            """
+            List all expanded items by name
+
+            """
+            for row in range(self.model.rowCount(parent)):
+                index = self.model.index(row, 0, parent)
+
+                if self.treeview.isExpanded(index):
+                    yield index.data(Qt.DisplayRole)
+
+                yield from iter_expandeditems(index)
+
+        def iter_checkeditems(parent=QModelIndex()):
+            """
+            List all checked items by name
+
+            """
+            for row in range(self.model.rowCount(parent)):
+                index = self.model.index(row, 0, parent)
+
+                if index.data(Qt.CheckStateRole) == Qt.Checked:
+                    yield index.data(Qt.DisplayRole)
+
+                yield from iter_checkeditems(index)
+
+        settings = QSettings()
+        settings.beginGroup("shoplist")
+        settings.setValue("expanded", list(iter_expandeditems()))
+        settings.setValue("checked", list(iter_checkeditems()))
+        settings.endGroup()
+
 
 class ShoplistDockWidget(QDockWidget):
     def __init__(self, parent=None):
@@ -260,6 +333,10 @@ class ShoplistDockWidget(QDockWidget):
         self.setObjectName("SuppliersDockWidget")
         self.setWindowTitle(self.tr("Supplier list"))
         self.setWidget(ShoplistWidget())
+
+    def closeEvent(self, event: QCloseEvent):
+        self.widget().closeEvent(event)
+        super().closeEvent(event)
 
 
 if __name__ == "__main__":

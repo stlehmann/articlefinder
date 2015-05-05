@@ -7,14 +7,12 @@ import webbrowser
 from PyQt5.Qt import Qt
 from PyQt5.QtCore import QTranslator, QCoreApplication, \
     QSettings
-from PyQt5.QtWidgets import QApplication, QListWidgetItem, QProgressDialog, \
-    QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME
 from articlefinder.gui.centralwidget import CentralWidget
 from articlefinder.gui.progressdialog import ProgressDialog
 from articlefinder.gui.shoplist import ShoplistDockWidget
-from articlefinder.gui.workerthread import WorkerThread
 from articlefinder.shops.bike.bike24 import Bike24
 from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
@@ -46,7 +44,7 @@ class MainWindow(QMainWindow):
 
         # Supplier list
         self.suppliers = shops
-        self.shoplistDockWidget = ShoplistDockWidget()
+        self.shoplistDockWidget = ShoplistDockWidget(self)
         self.shoplistWidget = self.shoplistDockWidget.widget()
         # self.shoplistWidget.itemChanged.connect(self.filter_checked_suppliers)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget)
@@ -60,7 +58,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         self.save_settings()
-        QMainWindow.closeEvent(self, event)
+        self.shoplistDockWidget.closeEvent(event)
+        super().closeEvent(event)
 
     def filter_checked_suppliers(self):
         for row in range(self.shoplistWidget.count()):
