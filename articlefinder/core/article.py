@@ -13,20 +13,25 @@ class Article:
 
     """
 
-    def __init__(self):
+    def __init__(self, shop=None):
         self.name = ""
         self.brand = ""
         self.articlenr = ""
         self.ordernr = ""
         self.price = None
         self.url = ""
-        self.shop = None
+        self.shop = shop
         self.units = 1
         self.properties = {}
         self.description = ""
         self.image_url = ""
         self.image = None
+        self.visible = True
 
     def __repr__(self):
-        return "<Article object name=%s, brand=%s, shop=%s, price=%.2f" % \
-               (self.name, self.brand, self.shop.name, self.price)
+        return "<Article object " + \
+            "name=%s" % self.name + \
+            (", brand=%s" % self.brand if self.brand is not "" else "") + \
+            (", shop=%s" % self.shop.name if self.shop is not None else "") + \
+            (", price=%s" % "%.2f" % self.price if self.price is not None else "") + \
+            ">"

@@ -42,7 +42,7 @@ class WorkerThread(QThread):
                     "'Find' function not implemented for shop '%s'."
                     % self.shop.name)
             except TypeError as e:
-                logger.debug("No results in shop '%s'." % shop.name)
+                logger.debug("No results in shop '%s'." % self.shop.name)
 
         self._cancel = False
         self.articles = list(_find())

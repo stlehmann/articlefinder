@@ -44,3 +44,5 @@ class Shop:
             return image
         except (socket.timeout, urllib.error.URLError):
             return None
+        except ValueError as e:
+            return None

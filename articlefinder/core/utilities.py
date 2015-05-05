@@ -50,11 +50,12 @@ def extract_float(str_):
 
     """
     pattern = re.compile(r"\b[0-9]{1,3}(\.[0-9]{3})*(,[0-9]+)?\b|,[0-9]+\b")
-    res = pattern.search(str_).group()
+    res = pattern.search(str_)
 
-    if not res:
-        return
+    if res is None:
+        return 0.0
 
+    res = res.group()
     res = res.replace(".", "")
     res = res.replace(",", ".")
 
@@ -68,3 +69,16 @@ def timeit(func):
         print("%s: %.3f" % (func.__name__, diff))
         return res, func.__name__
     return wrapper
+
+def attr_at_index(x, index=0, attr='text'):
+    """
+    Get an attribute of an element inside a list.
+
+    """
+    try:
+        if attr == 'text':
+            return x[index].text
+        else:
+            return x[index].get(attr)
+    except IndexError:
+        return ""

@@ -7,7 +7,6 @@ from articlefinder.shops.bike.bike_discount import BikeDiscount
 from articlefinder.shops.bike.cnc_bikes import CNCBikes
 from articlefinder.shops.bike.mtb_news import MTBNews
 from articlefinder.shops.electro.conrad import Conrad
-from articlefinder.shops.electro.farnell import Farnell
 from articlefinder.shops.electro.reichelt import Reichelt
 from articlefinder.shops.electro.rsonline import RSOnline
 from articlefinder.gui import mainwindow
@@ -19,15 +18,5 @@ from articlefinder.gui import mainwindow
 # ====================
 logger = logging.getLogger("articlefinder")
 logger.info('Starting Application')
-mainwindow.run([
-    Bike24(),
-    BikeDiscount(),
-    MTBNews(),
-    CNCBikes(),
-    Conrad(),
-    Farnell(),
-    Reichelt(),
-    RSOnline()],
-
-    title="Articlefinder")
+mainwindow.run()
 logger.info('Terminating Application')

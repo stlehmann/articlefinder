@@ -13,10 +13,6 @@ from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME
 from articlefinder.gui.centralwidget import CentralWidget
 from articlefinder.gui.progressdialog import ProgressDialog
 from articlefinder.gui.shoplist import ShoplistDockWidget
-from articlefinder.shops.bike.bike24 import Bike24
-from articlefinder.shops.bike.bike_discount import BikeDiscount
-from articlefinder.shops.bike.cnc_bikes import CNCBikes
-from articlefinder.shops.bike.mtb_news import MTBNews
 
 
 WINDOW_STATE_SETTING = "WindowState"
@@ -26,7 +22,7 @@ VERTICAL_HEADER_SETTING = "VerticalHeader"
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, shops, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
 
        # Central Widget with Result Table
@@ -43,10 +39,9 @@ class MainWindow(QMainWindow):
         self.centralWidget().resultTable.mouseMoveEvent = self.resultTable_mouseMove
 
         # Supplier list
-        self.suppliers = shops
         self.shoplistDockWidget = ShoplistDockWidget(self)
         self.shoplistWidget = self.shoplistDockWidget.widget()
-        # self.shoplistWidget.itemChanged.connect(self.filter_checked_suppliers)
+        self.shoplistWidget.checked_changed.connect(self.filter_checked_suppliers)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget)
 
         self._init_menus()
@@ -62,12 +57,12 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
 
     def filter_checked_suppliers(self):
-        for row in range(self.shoplistWidget.count()):
-            item = self.shoplistWidget.item(row)
-            shop = item.data(Qt.UserRole)
-            for a in self.model.articles:
-                if a.shop.name == shop.name:
-                    a.visible = item.checkState()
+        checked_shops = [shop.name for shop in
+                         self.shoplistWidget.get_selected_shops()]
+
+        for article in self.model.articles:
+            article.visible = article.shop.name in checked_shops
+
         self.model.refresh()
 
     def load_settings(self):
@@ -146,19 +141,18 @@ class MainWindow(QMainWindow):
         self.model.refresh()
 
 
-def run(shops=[Bike24(), BikeDiscount(), CNCBikes(), MTBNews()],
-        title="Articlefinder"):
+def run():
 
     app = QApplication(sys.argv)
-    QCoreApplication.setApplicationName(title)
+    QCoreApplication.setApplicationName("Articlefinder")
     QCoreApplication.setApplicationVersion("1.0.1")
     QCoreApplication.setOrganizationName("Stefan Lehmann")
     translator = QTranslator()
     tf = os.path.join(os.path.dirname(__file__), "articlefinder_de.qm")
     translator.load(tf)
     app.installTranslator(translator)
-    w = MainWindow(shops)
-    w.setWindowTitle(title)
+    w = MainWindow()
+    w.setWindowTitle("Articlefinder")
     w.show()
     app.exec_()
 

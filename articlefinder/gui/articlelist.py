@@ -99,7 +99,8 @@ class ArticleListModel(QAbstractTableModel):
 
     def refresh(self):
         self.beginResetModel()
-        self.visible_articles = self.articles
+        self.visible_articles = [article for article in self.articles
+                                 if article.visible]
         self.sort(self._sort_column, self._sort_order)
         self.endResetModel()
 

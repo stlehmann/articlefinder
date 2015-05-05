@@ -6,7 +6,8 @@ import logging
 import bisect
 import importlib
 import pkgutil
-from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt, QSettings
+from PyQt5.QtCore import QAbstractItemModel, QModelIndex, Qt, QSettings, \
+    pyqtSignal
 from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDockWidget, QListWidget, QWidget, QTreeView, \
     QVBoxLayout, QApplication, QPushButton
@@ -207,6 +208,9 @@ class ShoplistModel(QAbstractItemModel):
 
 
 class ShoplistWidget(QWidget):
+
+    checked_changed = pyqtSignal(object, bool)
+
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -214,6 +218,7 @@ class ShoplistWidget(QWidget):
         self.treeview = QTreeView()
         self.model = ShoplistModel()
         self.treeview.setModel(self.model)
+        self.model.dataChanged.connect(self.data_changed)
 
         # Layout
         layout = QVBoxLayout()
@@ -224,6 +229,11 @@ class ShoplistWidget(QWidget):
 
     def closeEvent(self, event: QCloseEvent):
         self.save_settings()
+
+    def data_changed(self, topleft, bottomright, roles):
+        if Qt.CheckStateRole in roles:
+            index = self.model.index(topleft.row(), 0, topleft.parent())
+            self.checked_changed.emit(index, index.data(Qt.CheckStateRole))
 
     def get_shops(self):
         """
@@ -286,7 +296,6 @@ class ShoplistWidget(QWidget):
         # Load checked items
         for name in settings.value("checked", []):
             items = iter_itemsbyname(name, QModelIndex())
-            print(name)
             if items:
                 self.model.setData(
                     next(items), Qt.Checked, Qt.CheckStateRole)
