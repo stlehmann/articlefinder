@@ -6,14 +6,15 @@ import webbrowser
 
 from PyQt5.Qt import Qt
 from PyQt5.QtCore import QTranslator, QCoreApplication, \
-    QSettings
+    QSettings, QUrl
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from articlefinder.gui import preview
 
-from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME
-from articlefinder.gui.centralwidget import CentralWidget
+from articlefinder.gui.articlelist import ArticleListModel, PRICE, NAME, \
+    ArticlelistWidget, ArticlelistDockWidget
+from articlefinder.gui.preview import PreviewDockWidget, PreviewWidget
 from articlefinder.gui.progressdialog import ProgressDialog
 from articlefinder.gui.shoplist import ShoplistDockWidget
-
 
 WINDOW_STATE_SETTING = "WindowState"
 WINDOW_GEOMETRY_SETTING = "WindowGeometry"
@@ -25,24 +26,38 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-       # Central Widget with Result Table
+        # Central Widget with Result Table
         self.model = ArticleListModel()
-        self.setCentralWidget(CentralWidget())
-        self.table = self.centralWidget().resultTable
+        # self.articlelistDockWidget = ArticlelistDockWidget(self)
+        self.articlelistWidget = ArticlelistWidget()
+        # self.addDockWidget(Qt.BottomDockWidgetArea, self.articlelistDockWidget)
+        self.setCentralWidget(self.articlelistWidget)
+        self.table = self.articlelistWidget.resultTable
         self.table.setModel(self.model)
-        self.model.table = self.centralWidget().resultTable
+        self.model.table = self.articlelistWidget.resultTable
 
         # Signals
-        self.centralWidget().searchLineEdit.returnPressed.connect(self.search)
-        self.centralWidget().resultTable.clicked.connect(self.open_url)
-        self.centralWidget().searchButton.pressed.connect(self.search)
-        self.centralWidget().resultTable.mouseMoveEvent = self.resultTable_mouseMove
+        self.articlelistWidget.searchLineEdit.returnPressed.connect(self.search)
+        self.articlelistWidget.resultTable.clicked.connect(self.open_url)
+        self.articlelistWidget.searchButton.pressed.connect(self.search)
+        self.articlelistWidget.resultTable.mouseMoveEvent = self.resultTable_mouseMove
 
         # Supplier list
         self.shoplistDockWidget = ShoplistDockWidget(self)
         self.shoplistWidget = self.shoplistDockWidget.widget()
-        self.shoplistWidget.checked_changed.connect(self.filter_checked_suppliers)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget)
+        self.shoplistWidget.checked_changed.connect(
+            self.filter_checked_suppliers)
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.shoplistDockWidget, Qt.Horizontal)
+
+        # Preview
+        self.previewDockWidget = PreviewDockWidget(self)
+        self.previewWidget = self.previewDockWidget.widget()
+        # self.setCentralWidget(self.previewWidget)
+        self.addDockWidget(Qt.RightDockWidgetArea, self.previewDockWidget,
+                           Qt.Horizontal)
+
+        # Articlelist
+
 
         self._init_menus()
         self.load_settings()
@@ -50,6 +65,7 @@ class MainWindow(QMainWindow):
     def _init_menus(self):
         self.viewMenu = self.menuBar().addMenu(self.tr('View'))
         self.viewMenu.addAction(self.shoplistDockWidget.toggleViewAction())
+        self.viewMenu.addAction(self.previewDockWidget.toggleViewAction())
 
     def closeEvent(self, event):
         self.save_settings()
@@ -79,11 +95,12 @@ class MainWindow(QMainWindow):
             self.resize(600, 800)
 
     def open_url(self, event):
-        index = self.centralWidget().resultTable.currentIndex()
+        index = self.articlelistWidget.resultTable.currentIndex()
         if index.isValid():
             if index.column() == NAME:
                 article = self.model.visible_articles[index.row()]
-                webbrowser.open_new_tab(article.url)
+                # webbrowser.open_new_tab(article.url)
+                self.previewWidget.load(QUrl(article.url))
 
     def progress(self, i, max, shopname):
         self.progressDlg.setMaximum(max)
@@ -91,14 +108,14 @@ class MainWindow(QMainWindow):
         self.progressDlg.setValue(i)
 
     def resultTable_mouseMove(self, event):
-        index = self.centralWidget().resultTable.indexAt(event.pos())
+        index = self.articlelistWidget.resultTable.indexAt(event.pos())
         if not index.isValid():
-            self.centralWidget().resultTable.unsetCursor()
+            self.articlelistWidget.resultTable.unsetCursor()
 
         if index.column() == NAME:
-            self.centralWidget().resultTable.setCursor(Qt.PointingHandCursor)
+            self.articlelistWidget.resultTable.setCursor(Qt.PointingHandCursor)
         else:
-            self.centralWidget().resultTable.unsetCursor()
+            self.articlelistWidget.resultTable.unsetCursor()
 
     def save_settings(self):
         QSettings().setValue(WINDOW_STATE_SETTING, self.saveState())
@@ -122,14 +139,14 @@ class MainWindow(QMainWindow):
 
         progressDlg = ProgressDialog(self)
         progressDlg.shops = self.shoplistWidget.get_selected_shops()
-        progressDlg.run_search(self.centralWidget().searchLineEdit.text())
+        progressDlg.run_search(self.articlelistWidget.searchLineEdit.text())
         progressDlg.exec_()
 
         self.model.beginResetModel()
         self.model.articles = progressDlg.articles
         self.model.refresh()
         self.model.endResetModel()
-        self.centralWidget().resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
+        self.articlelistWidget.resultTable.sortByColumn(PRICE, Qt.AscendingOrder)
 
     def suppliers_changed(self):
         for row in range(self.shoplistWidget.count()):
@@ -142,7 +159,6 @@ class MainWindow(QMainWindow):
 
 
 def run():
-
     app = QApplication(sys.argv)
     QCoreApplication.setApplicationName("Articlefinder")
     QCoreApplication.setApplicationVersion("1.0.1")

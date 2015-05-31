@@ -8,7 +8,7 @@ from PyQt5.QtCore import QAbstractTableModel, QThread, pyqtSignal, QModelIndex, 
 from PyQt5.QtGui import QPainter, QResizeEvent
 from PyQt5.QtWidgets import QDialog, QTableView, QVBoxLayout, QPushButton, \
     QStyleOptionViewItem, QStyleOptionProgressBar, QStyledItemDelegate, QStyle, \
-    QApplication, QStyleOptionProgressBar
+    QApplication, QStyleOptionProgressBar, QTreeView
 
 logger = logging.getLogger("articlefinder.progressdialog")
 
@@ -154,7 +154,7 @@ class ProgressDialog(QDialog):
 
         # TableView
         self.model = ProgressModel()
-        self.tableview = QTableView()
+        self.tableview = QTreeView()
         self.tableview.setModel(self.model)
         self.tableview.setItemDelegateForColumn(2, ProgressbarDelegate())
 
@@ -188,6 +188,7 @@ class ProgressDialog(QDialog):
 
     def run_search(self, searchterm):
         self.model.set_searchterm(searchterm)
+        self.setWindowTitle(self.tr("Searching for '%s'") % searchterm)
         for threaditem in self.model.items:
             thread = threaditem.thread
             thread.finished.connect(self.__thread_finished)

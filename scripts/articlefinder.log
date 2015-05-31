@@ -1,0 +1,395 @@
+2015-04-12 18:38:15,956 - articlefinder - INFO - Starting Application
+2015-04-12 18:38:50,084 - articlefinder - INFO - Starting Application
+2015-04-12 18:39:21,194 - articlefinder - INFO - Starting Application
+2015-04-29 20:46:53,813 - articlefinder - INFO - Starting Application
+2015-04-29 20:46:56,594 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,596 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,597 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,597 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,597 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,598 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,598 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,598 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-04-29 20:46:56,599 - articlefinder.gui.shoplist - ERROR - 'module' object has no attribute '__path__'
+2015-05-01 10:16:56,208 - articlefinder - INFO - Starting Application
+2015-05-01 10:17:50,540 - articlefinder - INFO - Starting Application
+2015-05-01 10:29:05,460 - articlefinder - INFO - Terminating Application
+2015-05-01 10:29:05,942 - articlefinder - INFO - Starting Application
+2015-05-01 10:29:14,136 - articlefinder - INFO - Terminating Application
+2015-05-01 10:32:56,602 - articlefinder - INFO - Starting Application
+2015-05-01 10:33:45,884 - articlefinder - INFO - Terminating Application
+2015-05-01 10:33:46,325 - articlefinder - INFO - Starting Application
+2015-05-01 10:33:56,002 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&search=Shimano&navigation=1&pitems=50'
+2015-05-01 10:33:56,383 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 10:33:56,664 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 10:39:48,646 - articlefinder - INFO - Terminating Application
+2015-05-01 15:46:15,015 - articlefinder - INFO - Starting Application
+2015-05-01 15:46:31,065 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?search=Shimano&pitems=50&navigation=1&content=13'
+2015-05-01 15:46:31,432 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 15:46:31,672 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 15:49:32,503 - articlefinder - INFO - Terminating Application
+2015-05-01 15:49:32,933 - articlefinder - INFO - Starting Application
+2015-05-01 15:49:41,669 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?pitems=50&content=13&search=Shimano&navigation=1'
+2015-05-01 15:49:41,939 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 15:49:42,192 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 15:49:42,214 - articlefinder.workerthread - WARNING - 
+2015-05-01 15:49:42,232 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-01 15:49:45,345 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-01 15:49:45,889 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-01 15:49:45,921 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano'
+2015-05-01 15:49:46,455 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-01 15:49:46,729 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-01 15:49:46,737 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-01 15:49:47,708 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-01 15:52:20,430 - articlefinder - INFO - Terminating Application
+2015-05-01 15:52:20,876 - articlefinder - INFO - Starting Application
+2015-05-01 15:52:29,285 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&pitems=50&navigation=1&search=Shimano'
+2015-05-01 15:52:29,537 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 15:52:29,769 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 15:52:29,791 - articlefinder.workerthread - WARNING - 
+2015-05-01 15:52:29,804 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-01 15:52:31,368 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-01 15:52:31,887 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-01 15:52:31,923 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano&title=1'
+2015-05-01 15:52:32,494 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-01 15:52:32,737 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-01 15:52:32,746 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-01 15:52:33,785 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-01 15:54:03,484 - articlefinder - INFO - Terminating Application
+2015-05-01 15:54:03,912 - articlefinder - INFO - Starting Application
+2015-05-01 15:54:11,994 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?pitems=50&content=13&search=Shimano&navigation=1'
+2015-05-01 15:54:12,225 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 15:54:12,477 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 15:54:12,501 - articlefinder.workerthread - WARNING - 
+2015-05-01 15:54:12,524 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-01 15:54:14,385 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-01 15:54:14,924 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-01 15:54:14,963 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano'
+2015-05-01 15:54:16,535 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-01 15:54:16,783 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-01 15:54:16,794 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-01 15:54:17,650 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-01 15:54:40,005 - articlefinder - INFO - Terminating Application
+2015-05-01 15:56:37,377 - articlefinder - INFO - Starting Application
+2015-05-01 15:56:47,991 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?search=Shimano&navigation=1&pitems=50&content=13'
+2015-05-01 15:56:48,227 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-01 15:56:48,491 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-01 15:56:48,513 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-01 15:56:48,523 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-01 15:56:49,325 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-01 15:56:49,838 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-01 15:56:49,875 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano&title=1'
+2015-05-01 15:56:50,650 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-01 15:56:50,901 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-01 15:56:50,911 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-01 15:56:51,851 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-01 15:57:40,820 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Conrad'.
+2015-05-01 15:57:40,820 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Farnell'.
+2015-05-01 15:57:40,820 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Reichelt'.
+2015-05-01 15:57:40,820 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'RS Online'.
+2015-05-01 15:58:15,817 - articlefinder - INFO - Terminating Application
+2015-05-01 15:58:17,998 - articlefinder - INFO - Starting Application
+2015-05-01 15:58:26,001 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Conrad'.
+2015-05-01 15:58:26,001 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Farnell'.
+2015-05-01 15:58:26,001 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'Reichelt'.
+2015-05-01 15:58:26,001 - articlefinder.workerthread - WARNING - 'Find' function not implemented for shop 'RS Online'.
+2015-05-01 15:59:10,663 - articlefinder - INFO - Terminating Application
+2015-05-01 15:59:12,832 - articlefinder - INFO - Starting Application
+2015-05-01 16:01:15,067 - articlefinder - INFO - Terminating Application
+2015-05-01 16:01:15,567 - articlefinder - INFO - Starting Application
+2015-05-01 16:01:33,299 - articlefinder.workerthread - DEBUG - No results in shop 'Farnell'.
+2015-05-01 16:04:19,776 - articlefinder - INFO - Terminating Application
+2015-05-01 16:05:44,986 - articlefinder - INFO - Starting Application
+2015-05-01 16:11:58,351 - articlefinder - INFO - Terminating Application
+2015-05-01 16:11:58,763 - articlefinder - INFO - Starting Application
+2015-05-01 16:12:17,971 - articlefinder.workerthread - DEBUG - No results in shop 'Farnell'.
+2015-05-01 16:13:03,332 - articlefinder - INFO - Terminating Application
+2015-05-03 18:39:56,503 - articlefinder - INFO - Starting Application
+2015-05-03 18:40:07,574 - articlefinder - INFO - Starting Application
+2015-05-03 18:40:17,195 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&search=Shimano&navigation=1&pitems=50'
+2015-05-03 18:40:17,199 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 18:40:17,200 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-03 18:40:17,201 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano&title=1'
+2015-05-03 18:40:17,202 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-03 18:40:17,503 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 18:40:17,789 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 18:40:17,821 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 18:40:17,995 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 18:40:17,995 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 18:40:18,104 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 18:40:18,892 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 18:40:36,718 - articlefinder - INFO - Terminating Application
+2015-05-03 18:40:39,010 - articlefinder - INFO - Starting Application
+2015-05-03 18:40:48,251 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&content=13&search=Shimano'
+2015-05-03 18:40:48,256 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 18:40:48,257 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-03 18:40:48,258 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano'
+2015-05-03 18:40:48,259 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-03 18:40:48,510 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 18:40:48,602 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 18:40:48,765 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 18:40:48,798 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 18:40:49,103 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 18:40:49,325 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 18:40:49,341 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 18:40:58,258 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&content=13&search=Shimano+Ultegra'
+2015-05-03 18:40:58,259 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 18:40:58,260 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 18:40:58,261 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano+Ultegra'
+2015-05-03 18:40:58,262 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 18:40:58,532 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 18:40:58,807 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 18:40:58,838 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 18:40:59,012 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 18:40:59,084 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 18:40:59,225 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 18:41:00,048 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 18:41:16,986 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&content=13&search=Shimano+Ultegra'
+2015-05-03 18:41:16,986 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 18:41:16,988 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 18:41:16,989 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano+Ultegra'
+2015-05-03 18:41:16,989 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 18:41:17,207 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 18:41:17,475 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 18:41:17,520 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 18:41:17,680 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 18:41:17,845 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 18:41:17,873 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 18:41:18,778 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 18:41:30,789 - articlefinder - INFO - Terminating Application
+2015-05-03 19:16:03,710 - articlefinder - INFO - Starting Application
+2015-05-03 19:16:16,325 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:16:16,325 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&search=Shimano+Ultegra&content=13'
+2015-05-03 19:16:16,326 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:16:16,331 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano+Ultegra'
+2015-05-03 19:16:16,331 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:16:16,660 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:16:16,932 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:16:16,960 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:16:17,215 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:16:17,232 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:16:17,420 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:16:17,807 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 19:16:27,989 - articlefinder - INFO - Terminating Application
+2015-05-03 19:17:05,963 - articlefinder - INFO - Starting Application
+2015-05-03 19:17:18,187 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?pitems=50&content=13&navigation=1&search=Shimano+Ultegra'
+2015-05-03 19:17:18,192 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:17:18,192 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:17:18,193 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano+Ultegra'
+2015-05-03 19:17:18,195 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:17:18,794 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:17:19,063 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:17:19,063 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:17:19,506 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:17:19,740 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:17:19,987 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:17:20,691 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 19:17:42,352 - articlefinder - INFO - Terminating Application
+2015-05-03 19:17:57,423 - articlefinder - INFO - Starting Application
+2015-05-03 19:18:18,530 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&navigation=1&pitems=50&search=Shimano+Ultegra'
+2015-05-03 19:18:18,535 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:18:18,535 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:18:18,537 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano+Ultegra&title=1'
+2015-05-03 19:18:18,538 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:18:18,802 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:18:19,074 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:18:19,152 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:18:19,401 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:18:19,451 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:18:21,014 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:18:21,881 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 19:18:47,610 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:18:47,611 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&navigation=1&pitems=50&search=Shimano+Ultegra'
+2015-05-03 19:18:47,611 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:18:47,612 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano+Ultegra&title=1'
+2015-05-03 19:18:47,614 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:18:48,182 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:18:48,276 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:18:48,538 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:18:50,688 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:18:51,233 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 19:18:52,033 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:18:52,269 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:19:15,861 - articlefinder - INFO - Starting Application
+2015-05-03 19:19:25,448 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&navigation=1&pitems=50&search=Shimano+Ultegra'
+2015-05-03 19:19:25,453 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:19:25,453 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:19:25,454 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano+Ultegra&title=1'
+2015-05-03 19:19:25,455 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:19:25,674 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:19:25,968 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:19:25,988 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:19:26,131 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:19:26,238 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:19:27,766 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:19:28,713 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 19:19:49,957 - articlefinder - INFO - Starting Application
+2015-05-03 19:20:00,343 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&pitems=50&search=Shimano+Ultegra&navigation=1'
+2015-05-03 19:20:00,349 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 19:20:00,349 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano+Ultegra'
+2015-05-03 19:20:00,351 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Shimano+Ultegra&title=1'
+2015-05-03 19:20:00,351 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano+Ultegra'
+2015-05-03 19:20:00,556 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 19:20:00,826 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 19:20:00,900 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 19:20:00,931 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 19:20:01,276 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 19:20:15,907 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 19:20:16,296 - articlefinder.shop.bikediscount - INFO - Found 0 items
+2015-05-03 19:20:22,041 - articlefinder - INFO - Terminating Application
+2015-05-03 19:59:02,118 - articlefinder - INFO - Starting Application
+2015-05-03 20:00:23,106 - articlefinder - INFO - Starting Application
+2015-05-03 20:01:11,608 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&search=Schlauch&navigation=1&pitems=50'
+2015-05-03 20:01:11,609 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch'
+2015-05-03 20:01:11,610 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 20:01:11,611 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Schlauch&title=1'
+2015-05-03 20:01:11,612 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch'
+2015-05-03 20:01:11,974 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 20:01:12,174 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 20:01:12,197 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 20:01:12,270 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 20:01:12,519 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 20:01:12,734 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 20:01:12,776 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 20:01:45,432 - articlefinder - INFO - Terminating Application
+2015-05-03 20:02:59,518 - articlefinder - INFO - Starting Application
+2015-05-03 20:03:09,349 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&content=13&search=Shimano'
+2015-05-03 20:03:09,350 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-03 20:03:09,355 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-03 20:03:09,355 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Shimano'
+2015-05-03 20:03:09,357 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Shimano'
+2015-05-03 20:03:09,632 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-03 20:03:09,788 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-03 20:03:10,014 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-03 20:03:10,107 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-03 20:03:10,163 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-03 20:03:10,463 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-03 20:03:11,225 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-03 20:03:27,894 - articlefinder - INFO - Terminating Application
+2015-05-05 13:41:16,874 - articlefinder - INFO - Starting Application
+2015-05-05 13:41:26,619 - articlefinder - INFO - Terminating Application
+2015-05-05 13:41:28,969 - articlefinder - INFO - Starting Application
+2015-05-05 13:41:38,253 - articlefinder - INFO - Terminating Application
+2015-05-05 13:42:22,685 - articlefinder - INFO - Starting Application
+2015-05-05 13:42:32,395 - articlefinder - INFO - Terminating Application
+2015-05-05 13:43:07,575 - articlefinder - INFO - Starting Application
+2015-05-05 13:43:13,941 - articlefinder - INFO - Terminating Application
+2015-05-05 13:43:58,519 - articlefinder - INFO - Starting Application
+2015-05-05 13:44:05,042 - articlefinder - INFO - Terminating Application
+2015-05-05 13:46:10,882 - articlefinder - INFO - Starting Application
+2015-05-05 13:46:16,624 - articlefinder - INFO - Terminating Application
+2015-05-05 13:50:31,721 - articlefinder - INFO - Starting Application
+2015-05-05 13:50:37,487 - articlefinder - INFO - Terminating Application
+2015-05-05 13:51:20,644 - articlefinder - INFO - Starting Application
+2015-05-05 13:51:29,055 - articlefinder - INFO - Terminating Application
+2015-05-05 13:51:32,561 - articlefinder - INFO - Starting Application
+2015-05-05 13:51:43,923 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 13:51:43,923 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Shimano'
+2015-05-05 13:51:44,724 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 13:51:45,274 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 13:52:01,279 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&navigation=1&search=Ultegra&pitems=50'
+2015-05-05 13:52:01,280 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 13:52:01,280 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Ultegra'
+2015-05-05 13:52:01,282 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Ultegra'
+2015-05-05 13:52:01,283 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Ultegra'
+2015-05-05 13:52:01,626 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 13:52:01,818 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 13:52:01,909 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 13:52:02,089 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 13:52:02,126 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 13:52:02,360 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 13:52:02,699 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 13:52:46,401 - articlefinder - INFO - Terminating Application
+2015-05-05 13:52:48,917 - articlefinder - INFO - Starting Application
+2015-05-05 13:52:55,461 - articlefinder - INFO - Terminating Application
+2015-05-05 13:56:41,643 - articlefinder - INFO - Starting Application
+2015-05-05 13:56:59,796 - articlefinder - INFO - Terminating Application
+2015-05-05 17:24:35,536 - articlefinder - INFO - Starting Application
+2015-05-05 17:24:44,477 - articlefinder - INFO - Terminating Application
+2015-05-05 17:24:47,468 - articlefinder - INFO - Starting Application
+2015-05-05 17:25:49,547 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&pitems=50&search=Schlauch+26&content=13'
+2015-05-05 17:25:49,548 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:25:49,549 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch+26'
+2015-05-05 17:25:49,550 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Schlauch+26'
+2015-05-05 17:25:49,551 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch+26'
+2015-05-05 17:25:50,020 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:25:50,096 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:25:50,327 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:25:50,430 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:25:50,786 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:25:50,804 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:25:51,174 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:27:00,571 - articlefinder - INFO - Starting Application
+2015-05-05 17:27:02,643 - articlefinder - INFO - Terminating Application
+2015-05-05 17:27:03,246 - articlefinder - INFO - Starting Application
+2015-05-05 17:27:11,243 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:27:11,244 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&search=Schlauch+26&content=13&pitems=50'
+2015-05-05 17:27:11,244 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch+26'
+2015-05-05 17:27:11,248 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Schlauch+26&title=1'
+2015-05-05 17:27:11,249 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch+26'
+2015-05-05 17:27:11,541 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:27:11,650 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:27:11,733 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:27:11,838 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:27:12,097 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:27:12,287 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:27:12,523 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:27:21,754 - articlefinder - INFO - Terminating Application
+2015-05-05 17:27:24,426 - articlefinder - INFO - Terminating Application
+2015-05-05 17:27:50,133 - articlefinder - INFO - Starting Application
+2015-05-05 17:28:00,893 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:28:00,893 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch+26'
+2015-05-05 17:28:00,894 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&search=Schlauch+26&navigation=1&pitems=50'
+2015-05-05 17:28:00,899 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?keywords=Schlauch+26&title=1'
+2015-05-05 17:28:00,899 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch+26'
+2015-05-05 17:28:01,174 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:28:01,300 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:28:01,457 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:28:01,610 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:28:01,778 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:28:01,934 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:28:02,351 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:28:35,719 - articlefinder - INFO - Terminating Application
+2015-05-05 17:34:10,284 - articlefinder - INFO - Starting Application
+2015-05-05 17:40:59,275 - articlefinder - INFO - Starting Application
+2015-05-05 17:41:26,485 - articlefinder - INFO - Starting Application
+2015-05-05 17:41:36,945 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?navigation=1&content=13&pitems=50&search=Schlauch+26'
+2015-05-05 17:41:36,946 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:41:36,946 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch+26'
+2015-05-05 17:41:36,951 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Schlauch+26'
+2015-05-05 17:41:36,952 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch+26'
+2015-05-05 17:41:37,309 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:41:37,417 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:41:37,578 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:41:37,697 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:41:37,924 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:41:38,041 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:41:38,540 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:42:48,964 - articlefinder - INFO - Terminating Application
+2015-05-05 17:43:15,175 - articlefinder - INFO - Starting Application
+2015-05-05 17:43:34,477 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?content=13&search=Schlauch&pitems=50&navigation=1'
+2015-05-05 17:43:34,482 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:43:34,482 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch'
+2015-05-05 17:43:34,483 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Schlauch'
+2015-05-05 17:43:34,484 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch'
+2015-05-05 17:43:34,752 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:43:34,915 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:43:35,021 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:43:35,085 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:43:35,447 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:43:35,458 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:43:35,467 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:47:19,818 - articlefinder - INFO - Starting Application
+2015-05-05 17:47:30,401 - articlefinder.shops.bike24 - INFO - Open url 'http://www.bike24.net/1.php?pitems=50&content=13&search=Schlauch&navigation=1'
+2015-05-05 17:47:30,401 - articlefinder.progressdialog - WARNING - 'Find' function not implemented for shop 'Bike Components'.
+2015-05-05 17:47:30,406 - articlefinder.shop.bikediscount - INFO - Open url 'http://www.bike-discount.de/shop/misearch.html?query=Schlauch'
+2015-05-05 17:47:30,407 - articlefinder.shop.cncbikes - INFO - Open url 'http://www.cnc-bike.de/advanced_search_result.php?title=1&keywords=Schlauch'
+2015-05-05 17:47:30,407 - articlefinder.shop.mtbnews - INFO - Open url  'http://bikemarkt.mtb-news.de/search/index?q_ft=Schlauch'
+2015-05-05 17:47:30,654 - articlefinder.shops.bike24 - INFO - url request successful
+2015-05-05 17:47:30,824 - articlefinder.shop.bikediscount - INFO - url request successful
+2015-05-05 17:47:30,910 - articlefinder.shop.cncbikes - INFO - url request successful
+2015-05-05 17:47:30,957 - articlefinder.shops.bike24 - INFO - Found 50 items
+2015-05-05 17:47:31,269 - articlefinder.shop.mtbnews - INFO - url request successful
+2015-05-05 17:47:31,404 - articlefinder.shop.cncbikes - INFO - Found 20 items
+2015-05-05 17:47:31,415 - articlefinder.shop.bikediscount - INFO - Found 24 items
+2015-05-05 17:47:53,518 - articlefinder - INFO - Terminating Application

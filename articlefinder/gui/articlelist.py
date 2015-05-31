@@ -1,10 +1,10 @@
-from urllib.request import urlretrieve, urlopen
+import sys
 from PyQt5.QtCore import QModelIndex, Qt, QVariant, \
-    QAbstractTableModel, QSize, QByteArray
+    QAbstractTableModel, QSize
 import operator
-from PyQt5.QtGui import QBrush, QFontMetrics, QFont, QImage, QPixmap
-
-__author__ = 'stefanlehmann'
+from PyQt5.QtGui import QBrush, QFontMetrics, QFont
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QTableView, \
+    QGridLayout, QApplication, QDockWidget
 
 COLUMN_COUNT = 4
 IMAGE, NAME, PRICE, SHOP = range(COLUMN_COUNT)
@@ -116,3 +116,52 @@ class ArticleListModel(QAbstractTableModel):
                                key=operator.attrgetter(attribute[column]),
                                reverse=order == Qt.DescendingOrder)
         self.endResetModel()
+
+
+class MyTableView(QTableView):
+    pass
+
+
+class ArticlelistWidget(QWidget):
+    def __init__(self):
+        super(ArticlelistWidget, self).__init__()
+
+        #Search label and LineEdit
+        self.searchLabel = QLabel(self.tr("Search term:"))
+        self.searchLineEdit = QLineEdit()
+        self.searchLabel.setBuddy(self.searchLineEdit)
+
+        #Search Button
+        self.searchButton = QPushButton(self.tr("Search"))
+
+        #Results
+        self.resultTable = MyTableView()
+        self.resultTable.setSortingEnabled(True)
+        self.resultTable.setMouseTracking(True)
+        self.resultTable.verticalHeader().sectionResized.connect(
+            self.row_resized)
+
+        #Layout
+        self.setLayout(QGridLayout())
+        self.layout().addWidget(self.searchLabel, 0, 0)
+        self.layout().addWidget(self.searchLineEdit, 0, 1)
+        self.layout().addWidget(self.searchButton, 0, 2)
+        self.layout().addWidget(self.resultTable, 1, 0, 1, 3)
+
+    def row_resized(self, index, old_size, new_size):
+        for i in range(self.resultTable.verticalHeader().count()):
+            self.resultTable.setRowHeight(i, new_size)
+
+
+class ArticlelistDockWidget(QDockWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWidget(ArticlelistWidget())
+        self.setObjectName("ArticlelistDockWidget")
+        self.setWindowTitle(self.tr("Articlelist"))
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    w = ArticlelistWidget()
+    w.show()
+    app.exec_()
